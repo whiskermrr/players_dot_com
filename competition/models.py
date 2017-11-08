@@ -55,8 +55,8 @@ class Player(models.Model):
 
 
 class MatchFacts(models.Model):
-    match = models.ForeignKey(Match)
-    player = models.ForeignKey(Player)
+    match = models.ForeignKey(Match, on_delete = models.CASCADE)
+    player = models.ForeignKey(Player, on_delete = models.CASCADE)
     incident = models.CharField(max_length=300)
     minute = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(120)]) # mecz trwa max 120 min
 
