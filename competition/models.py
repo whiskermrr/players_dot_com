@@ -3,10 +3,10 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class LeagueType(models.Model):
-    name1 = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.name1
+        return self.name
 
 
 class Team(models.Model):
@@ -55,9 +55,19 @@ class Player(models.Model):
 
 
 class MatchFacts(models.Model):
-    match = models.ForeignKey(Match, on_delete = models.CASCADE)
-    player = models.ForeignKey(Player, on_delete = models.CASCADE)
-    incident = models.CharField(max_length=300)
+    INCIDENT_TYPE = (
+        ('none','brak'),
+        ('goal', 'gol'),
+        ('sub in', 'zmiania wchodzi'),
+        ('sub out', 'zmiana zchodzi'),
+        ('yelow card', 'zolta kartka'),
+        ('red card', 'czerwona kartka'),
+    )
+    match = models.ForeignKey(Match, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    incident = models.CharField(max_length=15,
+                                choices=INCIDENT_TYPE,
+                                default='none')
     minute = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(120)]) # mecz trwa max 120 min
 
     def __str__(self):
