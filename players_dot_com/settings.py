@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'competition.apps.MusicConfig',
+    'competition.apps.CompetitionConfig',
 ]
 
 MIDDLEWARE = [
