@@ -1,0 +1,14 @@
+{% extends 'competition/base.html' %}
+
+{%  block body %}
+    {% if all_teams %}
+    <ul>
+        <h1>Druzyny</h1>
+            {% for team in all_teams %}
+                <li><a href="{% url 'competition:player_details' team.id  %}"> {{ team.name }} </a> </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Niema pilkarzy do wyswietlenia </h3>
+    {% endif %}
+{% endblock %}
