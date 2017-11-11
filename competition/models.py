@@ -48,15 +48,15 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
     sname = models.CharField(max_length=100)
     age = models.PositiveIntegerField(validators=[MinValueValidator(1)]) # minimalny wiek gracza
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(Team) # TODO not req
 
     def __str__(self):
-        return "{}-{}-{}".format(self.name, self.sname, self.team)
+        return "{}-{}-{}-{}".format(self.name, self.sname, self.age, self.team)
 
 
 class MatchFacts(models.Model):
     INCIDENT_TYPE = (
-        ('none','brak'),
+        ('none', 'brak'),
         ('goal', 'gol'),
         ('sub in', 'zmiania wchodzi'),
         ('sub out', 'zmiana zchodzi'),
