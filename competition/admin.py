@@ -22,6 +22,7 @@ class MatchFactsAdmin(admin.ModelAdmin):
     list_display = ('match', 'player', 'incident', 'minute')
 
 
+
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(LeagueType)
 admin.site.register(Match, MatchAdmin)

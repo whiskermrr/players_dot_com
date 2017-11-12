@@ -2,13 +2,31 @@
 
 {%  block body %}
     {% if all_teams %}
+
+
     <ul>
-        <h1>Druzyny</h1>
+        <h1>Drużyny</h1>
+
+            <div>
+                  <br>
+                <a href="{% url 'competition:team-add'  %}">
+                    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj druzyne </button>
+                </a>
+            </div>
+            <br>
+             <br>
             {% for team in all_teams %}
-                <li><a href="{% url 'competition:player_details' team.id  %}"> {{ team.name }} </a> </li>
+                  <br>
+
+
+
+                    {{ team.name }} {{ player.sname }}
+                    <a href="{% url 'competition:team_update' team.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                    <a href="{% url 'competition:team_delete' team.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+
             {% endfor %}
         </ul>
     {% else %}
-        <h3>Niema pilkarzy do wyswietlenia </h3>
+        <h3>Niema druzyn do wyswietlenia </h3>
     {% endif %}
 {% endblock %}
