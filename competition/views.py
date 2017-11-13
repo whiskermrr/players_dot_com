@@ -148,6 +148,22 @@ def match_add(request):
         match_form = MatchForm()
         return render(request, 'competition/match_add.html', {'match_form': match_form})
 
+
+def match_update(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    match_form = MatchForm(request.POST or None, instance=match)
+    if request.method == 'POST' and match_form.is_valid():
+        match_form.save()
+        return redirect('competition:match')
+    return render(request, 'competition/match_add.html', {'match_form': match_form})
+
+
+def match_delete(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    match.delete()
+    return redirect('competition:match')
+
+
 def fact_add(request, match_id):
     if request.method == 'POST':
         fact_form = MatchFactForm(data=request.POST)
@@ -156,5 +172,5 @@ def fact_add(request, match_id):
             new_fact.save()
         return redirect('competition:match_details', match_id=match_id)
     else:
-        fact_form = MatchFactForm(initial={'match' : match_id} )
-        return render(request, 'competition/fact_add.html', {'fact_form' : fact_form})
+        fact_form = MatchFactForm(initial={'match': match_id})
+        return render(request, 'competition/fact_add.html', {'fact_form': fact_form})

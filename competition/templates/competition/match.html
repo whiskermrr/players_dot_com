@@ -10,7 +10,11 @@
 
     {% if matches %}
         {% for match in matches %}
-            <a href="{% url 'competition:match_details' match.id  %}"> {{ match.host.name }} {{ match.hostGoals }} : {{ match.guestGoals }} {{ match.guest.name }}</a>
+            <li>
+                <a href="{% url 'competition:match_details' match.id  %}"> {{ match.host.name }} {{ match.hostGoals }} : {{ match.guestGoals }} {{ match.guest.name }}</a>
+                <a href="{% url 'competition:match_update' match.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                <a href="{% url 'competition:match_delete' match.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+            </li>
             <br>
         {% endfor %}
     {% else %}
