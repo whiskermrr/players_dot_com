@@ -1,0 +1,27 @@
+{% extends 'competition/base.html' %}
+
+{%  block body %}
+
+    <div>
+            <a href="{% url 'competition:player-add'  %}">
+                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj pilkarza </button>
+            </a>
+    </div>
+
+
+    {% if all_players %}
+    <ul>
+        <h1>Pilkarze</h1>
+            <br>
+            {% for player in all_players %}
+                <li>
+                    <a href="{% url 'competition:player_details' player.id  %}"> {{ player.name }} {{ player.sname }}</a>
+                    <a href="{% url 'competition:player_update' player.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                    <a href="{% url 'competition:player_delete' player.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h3>Niema pilkarzy do wyswietlenia </h3>
+    {% endif %}
+{% endblock %}

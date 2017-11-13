@@ -10,6 +10,7 @@ class LeagueType(models.Model):
 
 
 class Team(models.Model):
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -38,7 +39,7 @@ class Kolejka(models.Model):
 class Table(models.Model):
     name = models.ForeignKey(Team, on_delete=models.CASCADE)
     name1 = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
-    points = models.PositiveIntegerField(validators=[MinValueValidator(0)]) # nie mozna miec ujemnych pkt
+    points = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0) # nie mozna miec ujemnych pkt
 
     def __str__(self):
         return "{}-{}-{}".format(self.name, self.name1, self.points)
@@ -48,15 +49,15 @@ class Player(models.Model):
     name = models.CharField(max_length=100)
     sname = models.CharField(max_length=100)
     age = models.PositiveIntegerField(validators=[MinValueValidator(1)]) # minimalny wiek gracza
-    team = models.ForeignKey(Team)
+    team = models.ForeignKey(Team) # TODO not req
 
     def __str__(self):
-        return "{}-{}-{}".format(self.name, self.sname, self.team)
+        return "{}-{}-{}-{}".format(self.name, self.sname, self.age, self.team)
 
 
 class MatchFacts(models.Model):
     INCIDENT_TYPE = (
-        ('none','brak'),
+        ('none', 'brak'),
         ('goal', 'gol'),
         ('sub in', 'zmiania wchodzi'),
         ('sub out', 'zmiana zchodzi'),

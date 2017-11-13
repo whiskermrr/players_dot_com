@@ -1,0 +1,18 @@
+{% extends 'competition/base.html' %}
+
+{% block body %}
+
+    <h1> {{ team.name }}</h1>
+    {% if players %}
+        <ul>
+            <h2>Players</h2>
+            {% for player in players %}
+                <li>
+                    <a href="{% url 'competition:player_details' player.id  %}"> {{ player.name }} {{ player.sname }} </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2>There is no players in this Team</h2>
+    {% endif %}
+{% endblock %}
