@@ -9,6 +9,8 @@
         {% for fact in facts %}
             <li>
                 <h3> {{ fact.player.name }} {{ fact.incident }} Min: {{ fact.minute }} </h3>
+                <a href="{% url 'competition:fact_update' match.id fact.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                <a href="{% url 'competition:fact_delete' match.id fact.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
             </li>
         {% endfor %}
     {% else %}

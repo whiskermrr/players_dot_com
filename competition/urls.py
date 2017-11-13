@@ -52,6 +52,8 @@ url(r'^league/(?P<league_id>[0-9]+)/delete/$', views.league_delete, name='league
 
     # MATCH FACTS URLS
     url(r'match/(?P<match_id>[0-9]+)/fact/add/$', views.fact_add, name='fact_add'),
+    url(r'match/(?P<match_id>[0-9]+)/fact/(?P<fact_id>[0-9]+)/update/$', views.fact_update, name='fact_update'),
+    url(r'match/(?P<match_id>[0-9]+)/fact/(?P<fact_id>[0-9]+)/delete/$', views.fact_delete, name='fact_delete'),
 
 
 
