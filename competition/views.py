@@ -176,20 +176,17 @@ def fact_add(request, match_id):
         return render(request, 'competition/fact_add.html', {'fact_form': fact_form})
 
 
-def fact_delete(request, fact_id):
+def fact_delete(request, match_id, fact_id):
     fact = get_object_or_404(MatchFacts, pk=fact_id)
-    match_id = fact.match
     fact.delete()
     return redirect('competition:match_details', match_id=match_id)
 
 
-def fact_update(request, fact_id):
+def fact_update(request, match_id, fact_id):
     fact = get_object_or_404(MatchFacts, pk=fact_id)
     fact_form = MatchFactForm(request.POST or None, instance=fact)
     if request.method == 'POST' and fact_form.is_valid():
         fact_form.save()
-        match_id = fact.match
         return redirect('competition:match_details', match_id=match_id)
     else:
-        fact_form = MatchFactForm()
         return render(request, 'competition/fact_add.html', {'fact_form': fact_form})
