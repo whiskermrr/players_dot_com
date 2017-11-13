@@ -1,0 +1,17 @@
+{% extends 'competition/base.html' %}
+
+{% block body %}
+
+    <h1> {{ league.name }}</h1>
+    {% if teams %}
+        {% for team in teams %}
+            <ul>
+                <li><a href="{% url 'competition:team_details' team.id %}">{{ team.name }}</a></li>
+
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h2>No teams in this league</h2>
+    {% endif %}
+
+{% endblock %}

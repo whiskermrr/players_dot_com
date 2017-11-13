@@ -21,14 +21,38 @@ urlpatterns = [
     # player /competition/player/add
     url(r'^player/add/$', views.player_add, name='player-add'),
 
+
+    # LEAGUES URLS
+    # competition/8
+    url(r'^league/(?P<league_id>[0-9]+)/$', views.league_details, name='league_details'),
+    #competition/league/add/
+    url(r'^league/add/$', views.league_add, name='league-add'),
+    #competition/league/8/update/
+    url(r'^league/(?P<league_id>[0-9]+)/update/$', views.league_update, name='league_update'),
+    #competition/league/8/delete/
+url(r'^league/(?P<league_id>[0-9]+)/delete/$', views.league_delete, name='league_delete'),
     # TEAM URLS
     # /competition/team
     url(r'^team/$', views.team, name='team'),
+    #competition/team/8
+    url(r'^team/(?P<team_id>[0-9]+)/$', views.team_details, name='team_details'),
     # /competition/team/add
     url(r'^team/add/$', views.team_add, name='team-add'),
     # /competition/team/delete/8/
     url(r'^team/(?P<team_id>[0-9]+)/delete/$', views.team_delete, name='team_delete'),
     # /competition/team/update/8/
     url(r'^team/(?P<team_id>[0-9]+)/update/$', views.team_update, name='team_update'),
+
+    # MATCH URLS
+    url(r'^match/$', views.match, name='match'),
+    url(r'^match/(?P<match_id>[0-9]+)/$', views.match_details, name='match_details'),
+    url(r'^match/add/$', views.match_add, name='match-add'),
+
+
+    # MATCH FACTS URLS
+    url(r'match/(?P<match_id>[0-9]+)/fact/add/$', views.fact_add, name='fact_add'),
+
+
+
 
 ]

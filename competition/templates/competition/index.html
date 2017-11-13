@@ -4,21 +4,17 @@
     {% if all_league %}
     <ul>
         <h1>Ligi</h1>
+        <div>
+                <a href="{% url 'competition:league-add'  %}">
+                    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj lige </button>
+                </a>
+            </div>
+            <br>
             {% for league in all_league %}
-                <li><a href="//{{ league.id }}"> {{ league.name }} </a> </li>
-
-{#                 <a href="{% url 'competition:detail' album.id %}"> <img src="{{ album.album_logo.url }}" class="img-responsive"> </a>#}
-{#                <li>#}
-{#                    <a href="{% url 'competition:detail' album.id %}"> {{ album.artist }} </a>#}
-{#                </li>#}
-{#                    <a href="{% url 'competition:album-delete' album.id %}"> <span class="glyphicon glyphicon-trash"></span> </a>#}
-{#                <form action="{% url 'music:album-delete' album.id  %}" method="get" style="display: inline;">#}
-{#                    {% csrf_token %}#}
-{#                    <input type="hidden" name="album_id" value="{{ album.id }}" />#}
-{#                    <button type="submit" class="btn btn-default btn-sm">#}
-{#                        <span class="glyphicon glyphicon-trash"></span>#}
-{#                    </button>#}
-{#                </form>#}
+                <li><a href="{% url 'competition:league_details' league.id  %}"> {{ league.name }} </a>
+                    <a href="{% url 'competition:league_update' league.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+                    <a href="{% url 'competition:league_delete' league.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+                </li>
             {% endfor %}
         </ul>
     {% else %}

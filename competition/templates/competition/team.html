@@ -1,26 +1,22 @@
 {% extends 'competition/base.html' %}
 
 {%  block body %}
+
+    <div>
+        <br>
+        <a href="{% url 'competition:team-add'  %}">
+            <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj druzyne </button>
+        </a>
+    </div>
+
     {% if all_teams %}
-
-
     <ul>
         <h1>Drużyny</h1>
-
-            <div>
-                  <br>
-                <a href="{% url 'competition:team-add'  %}">
-                    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj druzyne </button>
-                </a>
-            </div>
             <br>
              <br>
             {% for team in all_teams %}
                   <br>
-
-
-
-                    {{ team.name }} {{ player.sname }}
+                    <a href="{% url 'competition:team_details' team.id %}"> {{ team.name }} {{ player.sname }} </a>
                     <a href="{% url 'competition:team_update' team.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
                     <a href="{% url 'competition:team_delete' team.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
 

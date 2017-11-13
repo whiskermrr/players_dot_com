@@ -1,15 +1,17 @@
 {% extends 'competition/base.html' %}
 
 {%  block body %}
+
+    <div>
+            <a href="{% url 'competition:player-add'  %}">
+                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj pilkarza </button>
+            </a>
+    </div>
+
+
     {% if all_players %}
     <ul>
         <h1>Pilkarze</h1>
-            <div>
-{#                 <a href="{% url 'competition:player-add' %}">#}
-                <a href="{% url 'competition:player-add'  %}">
-                    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj pilkarza </button>
-                </a>
-            </div>
             <br>
             {% for player in all_players %}
                 <li>

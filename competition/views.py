@@ -1,14 +1,6 @@
 from .models import LeagueType, Team, Match, Kolejka, Table, Player, MatchFacts
-from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
-from django.views import generic
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import View
-from django.core.urlresolvers import reverse_lazy
-from .forms import PlayerForm
-from django.template.response import TemplateResponse
-from .forms import TeamForm
+from .forms import PlayerForm, LeagueForm, MatchForm, TeamForm, MatchFactForm
 
 
 def index(request):
@@ -63,6 +55,13 @@ def team(request):
     return render(request, "competition/team.html", context)
 
 
+def team_details(request, team_id):
+    team = get_object_or_404(Team, pk=team_id)
+    players = Player.objects.filter(team=team_id)
+    context = {'players': players, 'team': team}
+    return render(request, 'competition/team_detail.html', context)
+
+
 def team_delete(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
     team.delete()
@@ -89,3 +88,73 @@ def team_update(request, team_id):
             team_form.save()
         return redirect('competition:team')
     return render(request, 'competition/team_add.html', {'team_form': team_form})
+
+
+def league_details(request, league_id):
+    teams = Team.objects.filter(league=league_id)
+    league = get_object_or_404(LeagueType, pk=league_id)
+    context = {'teams': teams, 'league': league}
+    return render(request, 'competition/league_detail.html', context)
+
+
+def league_add(request):
+    if request.method == 'POST':
+        league_form = LeagueForm(data=request.POST)
+        if league_form.is_valid():
+            new_league = league_form.save(commit=False)
+            new_league.save()
+        return redirect('competition:index')
+    else:
+        league_form = LeagueForm()
+        return render(request, 'competition/league_add.html', {'league_form': league_form})
+
+
+def league_update(request, league_id):
+    league = get_object_or_404(LeagueType, pk=league_id)
+    league_form = LeagueForm(request.POST or None, instance=league)
+    if request.method == 'POST' and league_form.is_valid():
+        league_form.save()
+        return redirect('competition:index')
+    return render(request, 'competition/league_add.html', {'league_form': league_form})
+
+
+def league_delete(request, league_id):
+    league = get_object_or_404(LeagueType, pk=league_id)
+    league.delete()
+    return redirect('competition:index')
+
+
+def match(request):
+    matches = Match.objects.all()
+    context = {'matches': matches}
+    return render(request, 'competition/match.html', context)
+
+
+def match_details(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    facts = MatchFacts.objects.filter(match=match_id)
+    context = {'match': match, 'facts': facts}
+    return render(request, 'competition/match_detail.html', context)
+
+
+def match_add(request):
+    if request.method == 'POST':
+        match_form = MatchForm(data=request.POST)
+        if match_form.is_valid():
+            new_match = match_form.save(commit=False)
+            new_match.save()
+        return redirect('competition:match')
+    else:
+        match_form = MatchForm()
+        return render(request, 'competition/match_add.html', {'match_form': match_form})
+
+def fact_add(request, match_id):
+    if request.method == 'POST':
+        fact_form = MatchFactForm(data=request.POST)
+        if fact_form.is_valid():
+            new_fact = fact_form.save(commit=False)
+            new_fact.save()
+        return redirect('competition:match_details', match_id=match_id)
+    else:
+        fact_form = MatchFactForm(initial={'match' : match_id} )
+        return render(request, 'competition/fact_add.html', {'fact_form' : fact_form})

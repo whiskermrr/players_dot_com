@@ -1,0 +1,23 @@
+{% extends 'competition/base.html' %}
+
+{% block body %}
+
+    <h1> {{ match.host.name }} {{ match.hostGoals}} : {{ match.guestGoals }} {{ match.guest.name }}</h1>
+    <h2> {{ match.date }}</h2>
+
+    {% if facts %}
+        {% for fact in facts %}
+            <li>
+                <h3> {{ fact.player.name }} {{ fact.incident }} Min: {{ fact.minute }} </h3>
+            </li>
+        {% endfor %}
+    {% else %}
+        <h2>No facts</h2>
+    {% endif %}
+
+    <div>
+            <a href="{% url 'competition:fact_add' match_id=match.id %}">
+                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add fact </button>
+            </a>
+    </div>
+{% endblock %}

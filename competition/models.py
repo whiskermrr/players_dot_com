@@ -10,6 +10,7 @@ class LeagueType(models.Model):
 
 
 class Team(models.Model):
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -38,7 +39,7 @@ class Kolejka(models.Model):
 class Table(models.Model):
     name = models.ForeignKey(Team, on_delete=models.CASCADE)
     name1 = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
-    points = models.PositiveIntegerField(validators=[MinValueValidator(0)]) # nie mozna miec ujemnych pkt
+    points = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0) # nie mozna miec ujemnych pkt
 
     def __str__(self):
         return "{}-{}-{}".format(self.name, self.name1, self.points)
