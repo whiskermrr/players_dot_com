@@ -1,0 +1,18 @@
+{% extends 'competition/base.html' %}
+
+{% block body %}
+
+
+    {% if seasons %}
+        <h1> {{ league_name }}</h1>
+        {% for s in seasons %}
+            <li>
+                <a href="{% url 'competition:season_teams' league_name s.id  %}">{{ league_name }} {{ s.season }} </a>
+            </li>
+            <br>
+        {% endfor %}
+    {% else %}
+        <h2>No leagues found.</h2>
+    {% endif %}
+
+{% endblock %}

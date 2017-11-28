@@ -1,17 +1,17 @@
 {% extends 'competition/base.html' %}
 
 {%  block body %}
-    {% if all_league %}
-    <ul>
-        <h1>Ligi</h1>
+    <h1>Ligi</h1>
         <div>
-                <a href="{% url 'competition:league-add'  %}">
-                    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj lige </button>
-                </a>
-            </div>
+            <a href="{% url 'competition:league-add'  %}">
+                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj lige </button>
+            </a>
+        </div>
+    {% if all_league %}
+        <ul>
             <br>
             {% for league in all_league %}
-                <li><a href="{% url 'competition:league_details' league.id  %}"> {{ league.name }} </a>
+                <li><a href="{% url 'competition:league_seasons' league.name %}"> {{ league.name }} </a>
                     <a href="{% url 'competition:league_update' league.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
                     <a href="{% url 'competition:league_delete' league.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
                 </li>
