@@ -14,7 +14,7 @@
         <h2>No Teams found.</h2>
     {% endif %}
 
-    <a href="{% url 'competition:league_table' league_id  %}"> Sprawdz Tabela {{ league_id }}</a>
+    <a href="{% url 'competition:league_table' league_id league_name %}"> Sprawdz Tabela {{ league_id }}</a>
 
     {% if  kolejka_list %}
         {% for k_list in  kolejka_list %}

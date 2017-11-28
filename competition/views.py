@@ -1,5 +1,5 @@
 import datetime
-
+import operator
 from .models import LeagueType, Team, Match, Kolejka, Table, Player, MatchFacts
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PlayerForm, LeagueForm, MatchForm, TeamForm, MatchFactForm
@@ -252,6 +252,37 @@ def fact_update(request, match_id, fact_id):
         return render(request, 'competition/fact_add.html', {'fact_form': fact_form})
 
 
-def league_table(request, league_id):
-    table = []
-    return render(request, 'competition/league_table.html', {'table': table})
+def league_table(request, league_id, league_name):
+    teams = list(Team.objects.filter(league__id=league_id))
+    match = Match.objects.filter(league=league_id)
+    league = LeagueType.objects.filter(pk=league_id).first()
+    # team_points = []
+    for t in teams:
+        point = 0
+        for m in match:
+            hg = m.hostGoals.__str__()
+            gg = m.guestGoals.__str__()
+            if hg != 'None' and gg != 'None':
+                if t == m.host:
+                    score = int(hg) - int(gg)
+                    if score > 0:
+                        point += 3
+                    elif score == 0:
+                        point += 1
+                if t == m.guest:
+                    score = int(gg) - int(hg)
+                    if score > 0:
+                        point += 3
+                    elif score == 0:
+                        point += 1
+        table = Table.objects.filter(league__id=league_id).filter(team__id=t.id)
+        if len(table) == 0:
+            table = Table.create(t, league, point)
+            table.save()
+            # team_points.append(table)
+        else:
+            table.update(points=point)
+            # team_points.append(table)
+
+    table_final = Table.objects.filter(league__id=league_id).order_by('-points')
+    return render(request, 'competition/league_table.html', {'team_points': table_final, 'league_name': league_name})

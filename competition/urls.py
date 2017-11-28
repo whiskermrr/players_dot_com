@@ -62,6 +62,6 @@ urlpatterns = [
     url(r'match/(?P<match_id>[0-9]+)/fact/(?P<fact_id>[0-9]+)/delete/$', views.fact_delete, name='fact_delete'),
 
     #TABELA
-    url(r'match/(?P<league_id>[0-9]+)/table/$', views.league_table, name='league_table'),
+    url(r'table/(?P<league_id>[0-9]+)/(?P<league_name>.+)/$', views.league_table, name='league_table'),
 
 ]

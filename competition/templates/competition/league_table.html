@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'competition/base.html' %}
 
-</body>
-</html>
+{% block body %}
+
+    {% if team_points %}
+        <h1> {{ league_name }}</h1>
+{#        {% for t_p in team_points %}#}
+        {% for t in team_points %}
+{#            {%  for t in t_p %}#}
+                <p> {{ t.team }} {{ t.points }}</p>
+{#            {% endfor %}#}
+        {% endfor %}
+    {% else %}
+        <h2>No info found.</h2>
+    {% endif %}
+
+
+{% endblock %}

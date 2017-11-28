@@ -50,8 +50,8 @@ class Match(models.Model):
     kolejka = models.ForeignKey(Kolejka, on_delete=models.CASCADE, blank=True, null=True)
     league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.now().strftime("%Y-%m-%d"), blank=True, null=True)  # data moze byc null
-    hostGoals = models.PositiveIntegerField(validators=[MinValueValidator(0)], blank=True, null=True)  # gole nie moga byc na minus, moze byc null
-    guestGoals = models.PositiveIntegerField(validators=[MinValueValidator(0)], blank=True, null=True) # gole nie moga byc na minus, moze byc null
+    hostGoals = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)  # gole nie moga byc na minus, moze byc null
+    guestGoals = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True) # gole nie moga byc na minus, moze byc null
 
     @classmethod
     def create(cls, host, guest, league):
@@ -64,12 +64,17 @@ class Match(models.Model):
 
 
 class Table(models.Model):
-    name = models.ForeignKey(Team, on_delete=models.CASCADE)
-    name1 = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
     points = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0) # nie mozna miec ujemnych pkt
 
+    @classmethod
+    def create(cls, team, league, points):
+        table = cls(team=team, league=league, points=points)
+        return table
+
     def __str__(self):
-        return "{}-{}-{}".format(self.name, self.name1, self.points)
+        return "{}-{}-{}".format(self.team, self.league, self.points)
 
 
 class Player(models.Model):

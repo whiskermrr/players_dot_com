@@ -19,7 +19,7 @@ class KolejkaAdmin(admin.ModelAdmin):
 
 
 class TableAdmin(admin.ModelAdmin):
-    list_display = ('name', 'name1', 'points')
+    list_display = ('team', 'league', 'points')
 
 
 class MatchFactsAdmin(admin.ModelAdmin):
