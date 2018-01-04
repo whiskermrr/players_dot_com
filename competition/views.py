@@ -1,10 +1,19 @@
+import datetime
+import operator
 from .models import LeagueType, Team, Match, Kolejka, Table, Player, MatchFacts
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PlayerForm, LeagueForm, MatchForm, TeamForm, MatchFactForm
 
 
 def index(request):
-    all_league = LeagueType.objects.all()
+    all_league = list(LeagueType.objects.all().order_by('name'))
+    for row in all_league:
+        count = 0
+        for row2 in all_league:
+            if row.name == row2.name:
+                count += 1
+                if count > 1:
+                    all_league.remove(row)
     context = {'all_league': all_league}
     return render(request, 'competition/index.html', context)
 
@@ -72,8 +81,7 @@ def team_add(request):
     if request.method == 'POST':
         team_form = TeamForm(data=request.POST)
         if team_form.is_valid():
-            new_team = team_form.save(commit=False)
-            new_team.save()
+            team_form.save()
         return redirect('competition:team')
     else:
         team_form = TeamForm()
@@ -122,6 +130,58 @@ def league_delete(request, league_id):
     league = get_object_or_404(LeagueType, pk=league_id)
     league.delete()
     return redirect('competition:index')
+
+
+def league_seasons(request, league_name):
+
+    seasons = LeagueType.objects.filter(name=league_name)
+    return render(request, 'competition/league_seasons.html', {'seasons': seasons, 'league_name': league_name})
+
+
+def season_teams(request, league_name, league_id):
+    # Kolejka.objects.all().delete()
+    # Match.objects.all().delete()
+
+    teams = list(Team.objects.filter(league__id=league_id))
+    league = LeagueType.objects.filter(pk=league_id).first()
+    kolejki = list(Kolejka.objects.filter(league=league_id))
+
+    kolejka_list = []
+
+    if len(kolejki) > 0:
+        kolejka_list = kolejka_list + kolejki
+
+    if len(kolejki) == 0:
+
+        if len(teams) % 2 != 0:
+            t = Team.create("pauza")
+            t.save()
+            teams.append(t)
+
+        number_of_kolejkas = len(teams) - 1
+        half_size = len(teams) / 2
+        teams_kolejkas = []
+        teams_kolejkas = teams_kolejkas + teams
+        teams_kolejkas.pop(0)
+        team_size = len(teams_kolejkas)
+
+        for k in range(0, number_of_kolejkas * 2):
+
+            team_idx = k % team_size
+            kolejka = Kolejka.create((k+1).__str__(), league)
+            kolejka.save()
+            new_match = Match.create(teams_kolejkas.__getitem__(team_idx), teams.__getitem__(0), league)
+            new_match.save()
+            kolejka.match_set.add(new_match)
+
+            for i in range(1, half_size):
+                first_team = (k + i) % team_size
+                second_team = (k + team_size - i) % team_size
+                new_match = Match.create(teams_kolejkas.__getitem__(first_team), teams_kolejkas.__getitem__(second_team), league)
+                new_match.save()
+                kolejka.match_set.add(new_match)
+            kolejka_list.append(kolejka)
+    return render(request, 'competition/season_teams.html', {'teams': teams, 'league_name': league_name, 'league_id': league_id, 'kolejka_list': kolejka_list})
 
 
 def match(request):
@@ -190,3 +250,39 @@ def fact_update(request, match_id, fact_id):
         return redirect('competition:match_details', match_id=match_id)
     else:
         return render(request, 'competition/fact_add.html', {'fact_form': fact_form})
+
+
+def league_table(request, league_id, league_name):
+    teams = list(Team.objects.filter(league__id=league_id))
+    match = Match.objects.filter(league=league_id)
+    league = LeagueType.objects.filter(pk=league_id).first()
+    # team_points = []
+    for t in teams:
+        point = 0
+        for m in match:
+            hg = m.hostGoals.__str__()
+            gg = m.guestGoals.__str__()
+            if hg != 'None' and gg != 'None':
+                if t == m.host:
+                    score = int(hg) - int(gg)
+                    if score > 0:
+                        point += 3
+                    elif score == 0:
+                        point += 1
+                if t == m.guest:
+                    score = int(gg) - int(hg)
+                    if score > 0:
+                        point += 3
+                    elif score == 0:
+                        point += 1
+        table = Table.objects.filter(league__id=league_id).filter(team__id=t.id)
+        if len(table) == 0:
+            table = Table.create(t, league, point)
+            table.save()
+            # team_points.append(table)
+        else:
+            table.update(points=point)
+            # team_points.append(table)
+
+    table_final = Table.objects.filter(league__id=league_id).order_by('-points')
+    return render(request, 'competition/league_table.html', {'team_points': table_final, 'league_name': league_name})

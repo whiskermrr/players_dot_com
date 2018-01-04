@@ -30,7 +30,13 @@ urlpatterns = [
     #competition/league/8/update/
     url(r'^league/(?P<league_id>[0-9]+)/update/$', views.league_update, name='league_update'),
     #competition/league/8/delete/
-url(r'^league/(?P<league_id>[0-9]+)/delete/$', views.league_delete, name='league_delete'),
+    url(r'^league/(?P<league_id>[0-9]+)/delete/$', views.league_delete, name='league_delete'),
+    #competition/league/8/seasons
+    url(r'^league/(?P<league_name>.+)/seasons/$', views.league_seasons, name='league_seasons'),
+    # competition/ekstraklasa/2/teams
+    url(r'^league/(?P<league_name>.+)/(?P<league_id>[0-9]+)/$', views.season_teams, name='season_teams'),
+    # url(r'^league/(?P<league_name>.+)/(?P<season_id>[0-9]+)/teams$', views.league_seasons, name='league_season_teams'),
+
     # TEAM URLS
     # /competition/team
     url(r'^team/$', views.team, name='team'),
@@ -55,7 +61,7 @@ url(r'^league/(?P<league_id>[0-9]+)/delete/$', views.league_delete, name='league
     url(r'match/(?P<match_id>[0-9]+)/fact/(?P<fact_id>[0-9]+)/update/$', views.fact_update, name='fact_update'),
     url(r'match/(?P<match_id>[0-9]+)/fact/(?P<fact_id>[0-9]+)/delete/$', views.fact_delete, name='fact_delete'),
 
-
-
+    #TABELA
+    url(r'table/(?P<league_id>[0-9]+)/(?P<league_name>.+)/$', views.league_table, name='league_table'),
 
 ]

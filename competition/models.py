@@ -1,48 +1,80 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
+from datetime import datetime
+
+
+class Season(models.Model):
+    season = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.season
 
 
 class LeagueType(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 
 class Team(models.Model):
-    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
+    league = models.ManyToManyField(LeagueType)
+
+    @classmethod
+    def create(cls, name):
+        team = cls(name=name)
+        return team
 
     def __str__(self):
         return self.name
 
 
+class Kolejka(models.Model):
+    name = models.CharField(max_length=2)
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE, blank=True, null=True)
+
+    @classmethod
+    def create(cls, name, league):
+        kolejka = cls(name=name, league=league)
+        return kolejka
+
+    def __str__(self):
+        return "{}-{}".format(self.name, self.league)
+
+
 class Match(models.Model):
     host = models.ForeignKey(Team, related_name='matches_as_host', on_delete=models.CASCADE)
     guest = models.ForeignKey(Team, related_name='MatchGuest', on_delete=models.CASCADE)
-    date = models.DateField(auto_created=False, auto_now=False)  # brak automatycznej daty przy stworzeniu i edycji
-    hostGoals = models.PositiveIntegerField(validators=[MinValueValidator(0)])  # gole nie moga byc na minus
-    guestGoals = models.PositiveIntegerField(validators=[MinValueValidator(0)]) # gole nie moga byc na minus
+    kolejka = models.ForeignKey(Kolejka, on_delete=models.CASCADE, blank=True, null=True)
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    date = models.DateField(default=datetime.now().strftime("%Y-%m-%d"), blank=True, null=True)  # data moze byc null
+    hostGoals = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)  # gole nie moga byc na minus, moze byc null
+    guestGoals = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True) # gole nie moga byc na minus, moze byc null
+
+    @classmethod
+    def create(cls, host, guest, league):
+        match = cls(host=host, guest=guest, league=league)
+
+        return match
 
     def __str__(self):
         return "{}-{}-{}-{}-{}".format(self.host, self.guest, self.date, self.hostGoals, self.guestGoals)
 
 
-class Kolejka(models.Model):
-    name = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
-    match = models.ForeignKey(Match, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return "{}-{}".format(self.name, self.match)
-
-
 class Table(models.Model):
-    name = models.ForeignKey(Team, on_delete=models.CASCADE)
-    name1 = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
     points = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0) # nie mozna miec ujemnych pkt
 
+    @classmethod
+    def create(cls, team, league, points):
+        table = cls(team=team, league=league, points=points)
+        return table
+
     def __str__(self):
-        return "{}-{}-{}".format(self.name, self.name1, self.points)
+        return "{}-{}-{}".format(self.team, self.league, self.points)
 
 
 class Player(models.Model):

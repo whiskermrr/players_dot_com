@@ -1,0 +1,27 @@
+{% extends 'competition/base.html' %}
+
+{% block body %}
+
+    {% if team_points %}
+        <h1> {{ league_name }}</h1>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>druzyna</th>
+                        <th>punkty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in team_points %}
+                       <tr>
+                           <td><p> <a href="{% url 'competition:team_details' t.team.id %}">{{ t.team }} </a> </p></td>
+                           <td><p> {{ t.points }}</p></td>
+
+                       </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    {% else %}
+        <h2>No info found.</h2>
+    {% endif %}
+{% endblock %}
