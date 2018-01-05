@@ -11,6 +11,7 @@
           <option value="competition.models.Kolejka.objects" />
           <option value="competition.models.TeamStats.objects" />
           <option value="competition.models.MatchFacts.objects" />
+          <option value="competition.models.Player.objects" />
         </list>
       </option>
     </inspection_tool>

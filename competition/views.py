@@ -197,7 +197,7 @@ def season_teams(request, league_name, league_id):
             teams.append(t)
 
         number_of_kolejkas = len(teams) - 1
-        half_size = len(teams) / 2
+        half_size = int(len(teams) / 2)
         teams_kolejkas = []
         teams_kolejkas = teams_kolejkas + teams
         teams_kolejkas.pop(0)

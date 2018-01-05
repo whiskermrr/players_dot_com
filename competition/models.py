@@ -21,6 +21,7 @@ class LeagueType(models.Model):
 class Team(models.Model):
     name = models.CharField(max_length=20)
     league = models.ManyToManyField(LeagueType)
+    avatar = models.ImageField(upload_to='media/avatars')
 
     @classmethod
     def create(cls, name):
