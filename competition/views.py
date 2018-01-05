@@ -104,9 +104,13 @@ def team_update(request, team_id):
             team_leagues = team.league.all()
 
             if team_stats:
+                # arrays that help to indicate valid stats and new leagues
                 valid_stats = [False for i in range(len(team_stats))]
                 new_leagues = [True for i in range(len(team_leagues))]
 
+                # checking if state is valid (you may delete team from a league but stats stays in db)
+                # to prevent bugs in the future, like listing league table within team that is not in the league
+                # or listing stats of league that in not team's league
                 for league in team_leagues:
                     for i, stats in enumerate(team_stats):
                         if stats.league == league:
@@ -116,6 +120,8 @@ def team_update(request, team_id):
                     if not valid_stats[i]:
                         stats.delete()
 
+                # similar to the code above but we're checking if there is a new league that team don't have
+                # stats linked to this league
                 for stats in team_stats:
                     for i, league in enumerate(team_leagues):
                         if stats.league == league:
@@ -124,7 +130,7 @@ def team_update(request, team_id):
                 for i, league in enumerate(team_leagues):
                     if new_leagues[i]:
                         TeamStats.create(team=team, league=league).save()
-
+            # if there is not stats in team linked to leagues we need to create them
             else:
                 for league in team_leagues:
                     TeamStats.create(team=team, league=league).save()
@@ -174,9 +180,6 @@ def league_seasons(request, league_name):
 
 
 def season_teams(request, league_name, league_id):
-    # Kolejka.objects.all().delete()
-    # Match.objects.all().delete()
-
     teams = list(Team.objects.filter(league__id=league_id))
     league = LeagueType.objects.filter(pk=league_id).first()
     kolejki = list(Kolejka.objects.filter(league=league_id))
@@ -238,23 +241,61 @@ def match_add(request):
         if match_form.is_valid():
             new_match = match_form.save(commit=False)
             new_match.save()
+            change_stats(new_match.id, True)
+
         return redirect('competition:match')
     else:
         match_form = MatchForm()
         return render(request, 'competition/match_add.html', {'match_form': match_form})
 
 
+def change_stats(match_id, update):
+    new_match = get_object_or_404(Match, id=match_id)
+    # if match has been played, if not we don't need to do anything
+    if new_match.hostGoals and new_match.guestGoals:
+        # working only on stats, not whole teams
+        host_stats = get_object_or_404(TeamStats, team_id=new_match.host.id, league_id=new_match.league.id)
+        guest_stats = get_object_or_404(TeamStats, team_id=new_match.guest.id, league_id=new_match.league.id)
+        goals_host = new_match.hostGoals
+        goals_guest = new_match.guestGoals
+        points_host = 0
+        points_guest = 0
+
+        if goals_host > goals_guest:
+            points_host = 3
+            points_guest = 0
+        elif goals_host < goals_guest:
+            points_host = 0
+            points_guest = 3
+        else:
+            points_host = 1
+            points_guest = 1
+        # updating stats
+        host_stats.addPoints(points=points_host, update=update)
+        host_stats.addScoredGoals(goals=goals_host, update=update)
+        host_stats.addLostGoals(goals=goals_guest, update=update)
+        guest_stats.addPoints(points=points_guest, update=update)
+        guest_stats.addScoredGoals(goals=goals_guest, update=update)
+        guest_stats.addLostGoals(goals=goals_host, update=update)
+        # saving changes
+        host_stats.save()
+        guest_stats.save()
+
+
 def match_update(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
     match_form = MatchForm(request.POST or None, instance=match)
     if request.method == 'POST' and match_form.is_valid():
-        match_form.save()
+        change_stats(match.id, False)
+        match = match_form.save()
+        change_stats(match.id, True)
         return redirect('competition:match')
     return render(request, 'competition/match_add.html', {'match_form': match_form})
 
 
 def match_delete(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
+    change_stats(match.id, False)
     match.delete()
     return redirect('competition:match')
 

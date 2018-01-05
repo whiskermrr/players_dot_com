@@ -43,8 +43,9 @@ class LeagueForm(forms.ModelForm):
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Match
-        fields = ('host', 'guest', 'date', 'hostGoals', 'guestGoals', 'kolejka')
+        fields = ('league', 'host', 'guest', 'date', 'hostGoals', 'guestGoals', 'kolejka',)
         labels = {
+            'league': 'League',
             'host': 'Gospodarz',
             'guest': 'Gosc',
             'date': 'Data',

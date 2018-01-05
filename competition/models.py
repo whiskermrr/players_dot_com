@@ -110,32 +110,46 @@ class MatchFacts(models.Model):
 class TeamStats(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
-    goalsScored = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
-    goalsLost = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
-    matchesWon = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
-    matchesLost = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
-    matchesDraw = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
-    scores = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+    goalsScored = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    goalsLost = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    matchesWon = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    matchesLost = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    matchesDraw = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+    scores = models.IntegerField(validators=[MinValueValidator(0)], default=0)
 
     @classmethod
     def create(cls, team, league):
         teamStats = cls(team=team, league=league)
         return teamStats
 
-    @classmethod
-    def addPoints(cls, points):
-        cls.scores += points
-        if points == 3:
-            cls.matchesWon += 1
-        elif points == 1:
-            cls.matchesDraw += 1
+
+    def addPoints(self, points, update):
+        if update:
+            self.scores += points
+            value = 1
         else:
-            cls.matchesLost += 1
+            self.scores -= points
+            value = -1
 
-    @classmethod
-    def addScoredGoals(cls, goals):
-        cls.goalsScored += goals
+        if points == 3:
+            self.matchesWon += value
+        elif points == 1:
+            self.matchesDraw += value
+        else:
+            self.matchesLost += value
 
-    @classmethod
-    def addLostGoals(cls, goals):
-        cls.goalsLost += goals
+
+    def addScoredGoals(self, goals, update):
+        if update:
+            self.goalsScored += goals
+        else:
+            self.goalsScored -= goals
+
+    def addLostGoals(self, goals, update):
+        if update:
+            self.goalsLost += goals
+        else:
+            self.goalsLost -=goals
+
+    def __str__(self):
+        return "{} {}".format(self.team, self.league)

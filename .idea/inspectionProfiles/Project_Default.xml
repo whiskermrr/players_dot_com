@@ -10,6 +10,7 @@
           <option value="competition.models.Table.objects" />
           <option value="competition.models.Kolejka.objects" />
           <option value="competition.models.TeamStats.objects" />
+          <option value="competition.models.MatchFacts.objects" />
         </list>
       </option>
     </inspection_tool>
