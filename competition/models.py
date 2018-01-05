@@ -60,7 +60,7 @@ class Match(models.Model):
         return match
 
     def __str__(self):
-        return "{}-{}-{}-{}-{}".format(self.host, self.guest, self.date, self.hostGoals, self.guestGoals)
+        return "{} {} : {} {}  {}".format(self.host, self.hostGoals, self.guestGoals, self.guest, self.date)
 
 
 class Table(models.Model):
@@ -105,3 +105,37 @@ class MatchFacts(models.Model):
 
     def __str__(self):
         return "{}-{}-{}-{}".format(self.match, self.player, self.incident, self.minute)
+
+
+class TeamStats(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    goalsScored = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+    goalsLost = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+    matchesWon = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+    matchesLost = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+    matchesDraw = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+    scores = models.PositiveIntegerField(validators=[MinValueValidator(0)], default=0)
+
+    @classmethod
+    def create(cls, team, league):
+        teamStats = cls(team=team, league=league)
+        return teamStats
+
+    @classmethod
+    def addPoints(cls, points):
+        cls.scores += points
+        if points == 3:
+            cls.matchesWon += 1
+        elif points == 1:
+            cls.matchesDraw += 1
+        else:
+            cls.matchesLost += 1
+
+    @classmethod
+    def addScoredGoals(cls, goals):
+        cls.goalsScored += goals
+
+    @classmethod
+    def addLostGoals(cls, goals):
+        cls.goalsLost += goals
