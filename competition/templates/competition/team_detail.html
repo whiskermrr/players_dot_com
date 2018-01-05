@@ -29,8 +29,8 @@ img
             {% endfor %}
         </div>
         <div class="col-md-3">
-            <h3>Total Stats:</h3>
             <br>
+            <h4>Total Stats:</h4>
             <p><span class="label label-success" style="font-size: 18px;">Matches Won: {{ total_matches_won }}</span></p>
             <p><span class="label label-danger" style="font-size: 18px;">Matches Lost: {{ total_matches_lost }}</span></p>
             <br>
@@ -52,9 +52,19 @@ img
     <hr/>
 
     <div class="row">
-        <div class="col-md-5" style="padding-right: 2cm;">
-            {% for league in team.league.all %}
-                <a href="{% url 'competition:league_details' league.id %}"><p> {{ league.name }} {{ league.season.season }}</p></a>
+        <div class="col-md-8" style="padding-right: 2cm;">
+            {% for season in seasons %}
+                <p>{{ season.league.name }} {{ season.season }}</p>
+                {% for stats in team_stats %}
+                    {% if stats.season.id == season.id %}
+            <p>
+                <span class="label label-info">Won: {{ stats.matchesWon }}</span>
+                <span class="label label-info">Lost: {{ stats.matchesLost }}</span>
+                <span class="label label-info">Scored: {{ stats.goalsScored }}</span>
+                <span class="label label-info">Lost: {{ stats.goalsLost }}</span>
+            </p>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </div>
     </div>

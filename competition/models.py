@@ -3,19 +3,20 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime
 
 
-class Season(models.Model):
-    season = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.season
-
 
 class LeagueType(models.Model):
     name = models.CharField(max_length=20)
-    season = models.ForeignKey(Season, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
+
+
+class Season(models.Model):
+    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    season = models.CharField(max_length=20)
+
+    def __str__(self):
+        return "{} {}".format(self.league, self.season)
 
 
 class Team(models.Model):
@@ -37,8 +38,8 @@ class Kolejka(models.Model):
     league = models.ForeignKey(LeagueType, on_delete=models.CASCADE, blank=True, null=True)
 
     @classmethod
-    def create(cls, name, league):
-        kolejka = cls(name=name, league=league)
+    def create(cls, name, season):
+        kolejka = cls(name=name, league=season)
         return kolejka
 
     def __str__(self):
@@ -49,7 +50,7 @@ class Match(models.Model):
     host = models.ForeignKey(Team, related_name='matches_as_host', on_delete=models.CASCADE)
     guest = models.ForeignKey(Team, related_name='MatchGuest', on_delete=models.CASCADE)
     kolejka = models.ForeignKey(Kolejka, on_delete=models.CASCADE, blank=True, null=True)
-    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
     date = models.DateField(default=datetime.now().strftime("%Y-%m-%d"), blank=True, null=True)  # data moze byc null
     hostGoals = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True)  # gole nie moga byc na minus, moze byc null
     guestGoals = models.IntegerField(validators=[MinValueValidator(0)], blank=True, null=True) # gole nie moga byc na minus, moze byc null
@@ -110,7 +111,7 @@ class MatchFacts(models.Model):
 
 class TeamStats(models.Model):
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
-    league = models.ForeignKey(LeagueType, on_delete=models.CASCADE)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
     goalsScored = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     goalsLost = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     matchesWon = models.IntegerField(validators=[MinValueValidator(0)], default=0)
@@ -119,8 +120,8 @@ class TeamStats(models.Model):
     scores = models.IntegerField(validators=[MinValueValidator(0)], default=0)
 
     @classmethod
-    def create(cls, team, league):
-        teamStats = cls(team=team, league=league)
+    def create(cls, team, season):
+        teamStats = cls(team=team, season=season)
         return teamStats
 
 
@@ -153,4 +154,4 @@ class TeamStats(models.Model):
             self.goalsLost -=goals
 
     def __str__(self):
-        return "{} {}".format(self.team, self.league)
+        return "{} {}".format(self.team, self.season)

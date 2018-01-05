@@ -11,7 +11,7 @@
         <ul>
             <br>
             {% for league in all_league %}
-                <li><a href="{% url 'competition:league_seasons' league.name %}"> {{ league.name }} </a>
+                <li><a href="{% url 'competition:league_seasons' league.id %}"> {{ league.name }} </a>
                     <a href="{% url 'competition:league_update' league.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
                     <a href="{% url 'competition:league_delete' league.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
                 </li>

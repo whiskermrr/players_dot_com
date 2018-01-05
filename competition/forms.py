@@ -18,7 +18,7 @@ class PlayerForm(forms.ModelForm):
 class TeamForm(forms.ModelForm):
 
     name = forms.CharField(max_length=100)
-    league = forms.ModelMultipleChoiceField(queryset=LeagueType.objects.filter(season__season=2018), widget=forms.CheckboxSelectMultiple())
+    league = forms.ModelMultipleChoiceField(queryset=LeagueType.objects.all(), widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = Team
@@ -34,19 +34,27 @@ class TeamForm(forms.ModelForm):
 class LeagueForm(forms.ModelForm):
     class Meta:
         model = LeagueType
-        fields = ['name', 'season']
+        fields = ['name']
         labels = {
             'name': 'Nazwa',
-            'season': 'Sezon',
+        }
+
+
+class SeasonForm(forms.ModelForm):
+    class Meta:
+        model = Season
+        fields = ['season']
+        labels  = {
+            'season': 'Season',
         }
 
 
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Match
-        fields = ['league', 'host', 'guest', 'date', 'hostGoals', 'guestGoals', 'kolejka',]
+        fields = ['season', 'host', 'guest', 'date', 'hostGoals', 'guestGoals', 'kolejka',]
         labels = {
-            'league': 'League',
+            'season': 'League',
             'host': 'Gospodarz',
             'guest': 'Gosc',
             'date': 'Data',
