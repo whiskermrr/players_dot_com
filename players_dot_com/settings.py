@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'competition',
     # 3th part apps
     'crispy_forms',
+    'smart_selects',
 
     'django.contrib.admin',
     'django.contrib.auth',

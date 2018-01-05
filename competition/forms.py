@@ -6,7 +6,7 @@ from .models import Team, LeagueType, Match, MatchFacts
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
-        fields = ('name', 'sname', 'age', 'team')
+        fields = ['name', 'sname', 'age', 'team']
         labels = {
             'name': 'Imie',
             'sname': 'Nazwisko',
@@ -23,7 +23,7 @@ class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
 
-        fields = ('avatar', 'name', 'league')
+        fields = ['avatar', 'name', 'league']
         labels = {
             'avatar': 'Avatar',
             'name': 'Nazwa',
@@ -34,7 +34,7 @@ class TeamForm(forms.ModelForm):
 class LeagueForm(forms.ModelForm):
     class Meta:
         model = LeagueType
-        fields = ('name', 'season')
+        fields = ['name', 'season']
         labels = {
             'name': 'Nazwa',
             'season': 'Sezon',
@@ -44,7 +44,7 @@ class LeagueForm(forms.ModelForm):
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Match
-        fields = ('league', 'host', 'guest', 'date', 'hostGoals', 'guestGoals', 'kolejka',)
+        fields = ['league', 'host', 'guest', 'date', 'hostGoals', 'guestGoals', 'kolejka',]
         labels = {
             'league': 'League',
             'host': 'Gospodarz',

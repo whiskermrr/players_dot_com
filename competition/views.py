@@ -199,7 +199,6 @@ def league_delete(request, league_id):
 
 
 def league_seasons(request, league_name):
-
     seasons = LeagueType.objects.filter(name=league_name)
     return render(request, 'competition/league_seasons.html', {'seasons': seasons, 'league_name': league_name})
 

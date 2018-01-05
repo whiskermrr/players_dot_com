@@ -39,11 +39,24 @@ img
         </div>
         <div class="col-md-4">
             <a> <img src="{{ team.avatar.url }}"> </a>
+            <div class="pull-right">
+                <a href="{% url 'competition:team_update' team.id %}">
+                    <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
+                </a>
+                <a href="{% url 'competition:team_delete' team.id %}">
+                    <button type="button"><span class="glyphicon glyphicon-trash"></span></button>
+                </a>
+            </div>
         </div>
     </div>
     <hr/>
 
     <div class="row">
+        <div class="col-md-5" style="padding-right: 2cm;">
+            {% for league in team.league.all %}
+                <a href="{% url 'competition:league_details' league.id %}"><p> {{ league.name }} {{ league.season.season }}</p></a>
+            {% endfor %}
+        </div>
     </div>
 
 
