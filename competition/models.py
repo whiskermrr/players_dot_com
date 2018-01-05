@@ -91,12 +91,12 @@ class Player(models.Model):
 
 class MatchFacts(models.Model):
     INCIDENT_TYPE = (
-        ('none', 'brak'),
-        ('goal', 'gol'),
-        ('sub in', 'zmiania wchodzi'),
-        ('sub out', 'zmiana zchodzi'),
-        ('yelow card', 'zolta kartka'),
-        ('red card', 'czerwona kartka'),
+        ('none', 'none'),
+        ('goal', 'goal'),
+        ('sub in', 'sub in'),
+        ('sub out', 'sub out'),
+        ('yellow card', 'yellow card'),
+        ('red card', 'red card'),
     )
     match = models.ForeignKey(Match, on_delete=models.CASCADE)
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
