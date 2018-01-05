@@ -67,7 +67,31 @@ def team(request):
 def team_details(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
     players = Player.objects.filter(team=team_id)
-    context = {'players': players, 'team': team}
+    team_stats = TeamStats.objects.filter(team=team_id)
+
+    total_goals_scored = 0
+    total_goals_lost = 0
+    total_matches_won = 0
+    total_matches_lost = 0
+    total_matches_draw = 0
+
+    if team_stats:
+        for stats in team_stats:
+            total_goals_scored += stats.goalsScored
+            total_goals_lost += stats.goalsLost
+            total_matches_won += stats.matchesWon
+            total_matches_lost += stats.matchesLost
+            total_matches_draw += stats.matchesDraw
+
+    context = {
+        'players': players, 'team': team,
+        'team_stats': team_stats,
+        'total_goals_scored': total_goals_scored,
+        'total_goals_lost': total_goals_lost,
+        'total_matches_won': total_matches_won,
+        'total_matches_lost': total_matches_lost,
+        'total_matches_draw': total_matches_draw,
+    }
     return render(request, 'competition/team_detail.html', context)
 
 
@@ -79,14 +103,15 @@ def team_delete(request, team_id):
 
 def team_add(request):
     if request.method == 'POST':
-        team_form = TeamForm(data=request.POST)
+        team_form = TeamForm(request.POST, request.FILES)
         if team_form.is_valid():
             team = team_form.save()
             leagues = team.league.all()
             for league in leagues:
                 team_stats = TeamStats.create(team, league)
                 team_stats.save()
-
+        else:
+            print(team_form.errors)
 
         return redirect('competition:team')
     else:

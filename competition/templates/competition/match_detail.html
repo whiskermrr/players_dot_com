@@ -4,6 +4,8 @@
 
     <h1> {{ match.host.name }} {{ match.hostGoals}} : {{ match.guestGoals }} {{ match.guest.name }}</h1>
     <h2> {{ match.date }}</h2>
+    <a href="{% url 'competition:match_update' match.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+    <a href="{% url 'competition:match_delete' match.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
 
     {% if facts %}
         {% for fact in facts %}

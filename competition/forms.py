@@ -18,13 +18,14 @@ class PlayerForm(forms.ModelForm):
 class TeamForm(forms.ModelForm):
 
     name = forms.CharField(max_length=100)
-    league = forms.ModelMultipleChoiceField(queryset=LeagueType.objects.filter(season__season=2017), widget=forms.CheckboxSelectMultiple())
+    league = forms.ModelMultipleChoiceField(queryset=LeagueType.objects.filter(season__season=2018), widget=forms.CheckboxSelectMultiple())
 
     class Meta:
         model = Team
 
-        fields = ('name', 'league')
+        fields = ('avatar', 'name', 'league')
         labels = {
+            'avatar': 'Avatar',
             'name': 'Nazwa',
             'league': 'Liga',
         }

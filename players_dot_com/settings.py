@@ -131,8 +131,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "competition/static")
 ]
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "competition/static_cdn")
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "competition/media_cdn")
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "players_dot_com/static_cdn")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "players_dot_com/media_cdn")
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
