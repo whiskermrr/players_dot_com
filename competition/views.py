@@ -1,6 +1,6 @@
 import datetime
 import operator
-from .models import LeagueType, Team, Match, Kolejka, Table, Player, MatchFacts
+from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PlayerForm, LeagueForm, MatchForm, TeamForm, MatchFactForm
 
@@ -81,7 +81,13 @@ def team_add(request):
     if request.method == 'POST':
         team_form = TeamForm(data=request.POST)
         if team_form.is_valid():
-            team_form.save()
+            team = team_form.save()
+            leagues = team.league.all()
+            for league in leagues:
+                team_stats = TeamStats.create(team, league)
+                team_stats.save()
+
+
         return redirect('competition:team')
     else:
         team_form = TeamForm()
@@ -93,7 +99,36 @@ def team_update(request, team_id):
     team_form = TeamForm(request.POST or None, instance=team)
     if request.method == 'POST':
         if team_form.is_valid():
-            team_form.save()
+            team = team_form.save()
+            team_stats = TeamStats.objects.filter(team=team)
+            team_leagues = team.league.all()
+
+            if team_stats:
+                valid_stats = [False for i in range(len(team_stats))]
+                new_leagues = [True for i in range(len(team_leagues))]
+
+                for league in team_leagues:
+                    for i, stats in enumerate(team_stats):
+                        if stats.league == league:
+                            valid_stats[i] = True
+
+                for i, stats in enumerate(team_stats):
+                    if not valid_stats[i]:
+                        stats.delete()
+
+                for stats in team_stats:
+                    for i, league in enumerate(team_leagues):
+                        if stats.league == league:
+                            new_leagues[i] = False
+
+                for i, league in enumerate(team_leagues):
+                    if new_leagues[i]:
+                        TeamStats.create(team=team, league=league).save()
+
+            else:
+                for league in team_leagues:
+                    TeamStats.create(team=team, league=league).save()
+
         return redirect('competition:team')
     return render(request, 'competition/team_add.html', {'team_form': team_form})
 
