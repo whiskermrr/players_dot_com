@@ -11,7 +11,7 @@
     {% if seasons %}
         {% for s in seasons %}
             <li>
-                <a href="#"> {{ s.season }} </a>
+                <a href="{% url 'competition:season_table' league.id s.id %}"> {{ s.season }} </a>
             </li>
             <br>
         {% endfor %}

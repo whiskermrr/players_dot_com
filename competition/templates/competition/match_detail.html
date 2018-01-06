@@ -60,6 +60,11 @@ table.fixed td { overflow: hidden; }
 {% block body %}
 
 <div class="match col-md-8 col-sm-offset-2">
+    <div class="row" style="background-color: #8dc63f; text-align: center;">
+        <a href="{% url 'competition:team_details' match.host.id %}">
+            <h3>{{ match.season.league.name }} {{ match.season.season }}</h3>
+        </a>
+    </div>
     <div class="row" style="background-color: #8dc63f;">
         <div class="col-md-4 pull-left" style="text-align: center;">
             <a href="{% url 'competition:team_details' match.host.id %}"><h3>{{ match.host.name }}</h3></a>
@@ -78,6 +83,14 @@ table.fixed td { overflow: hidden; }
         <div class="col-md-4 pull-right">
             <a> <img src="{{ match.guest.avatar.url }}"> </a>
         </div>
+    </div>
+    <div class="row" style="background-color: #a6df58; text-align: center;">
+        <a href="{% url 'competition:match_update' match.id %}">
+            <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
+        </a>
+        <a href="{% url 'competition:match_delete' match.id %}">
+            <button type="button"><span class="glyphicon glyphicon-trash"></span></button>
+        </a>
     </div>
     <div class="row" style="background-color: #8dc63f;">
         <hr/>

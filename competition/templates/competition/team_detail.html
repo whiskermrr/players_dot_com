@@ -5,9 +5,11 @@
 
 img
 {
-    max-width: 220px;
-    max-height: 220px;
+    width: 100%;
+    width: 220px;
+    height: 220px;
     padding: 5px;
+    margin: 0px;
 }
 
 .team
@@ -32,6 +34,7 @@ img
             <br>
             <h4>Total Stats:</h4>
             <p><span class="label label-success" style="font-size: 18px;">Matches Won: {{ total_matches_won }}</span></p>
+            <p><span class="label label-warning" style="font-size: 18px;">Matches Lost: {{ total_matches_draw }}</span></p>
             <p><span class="label label-danger" style="font-size: 18px;">Matches Lost: {{ total_matches_lost }}</span></p>
             <br>
             <p><span class="label label-success" style="font-size: 18px;">Goals Scored:: {{ total_goals_scored }}</span></p>
@@ -54,7 +57,9 @@ img
     <div class="row">
         <div class="col-md-8" style="padding-right: 2cm;">
             {% for season in seasons %}
-                <p>{{ season.league.name }} {{ season.season }}</p>
+                <a href="{% url 'competition:season_table' season.league.id season.id %}">
+                    <p>{{ season.league.name }} {{ season.season }}</p>
+                </a>
                 {% for stats in team_stats %}
                     {% if stats.season.id == season.id %}
             <p>

@@ -34,6 +34,8 @@ urlpatterns = [
     #competition/league/8/seasons
     url(r'^league/(?P<league_id>[0-9]+)/seasons/$', views.league_seasons, name='league_seasons'),
 
+    url(r'^league/(?P<league_id>[0-9]+)/seasons/(?P<season_id>[0-9]+)/$', views.season_table, name='season_table'),
+
     url(r'^league/(?P<league_id>[0-9]+)/seasons/add$', views.season_add, name='season_add'),
     # competition/ekstraklasa/2/teams
     #url(r'^league/(?P<league_name>.+)/(?P<league_id>[0-9]+)/$', views.season_teams, name='season_teams'),

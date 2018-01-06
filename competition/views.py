@@ -335,3 +335,45 @@ def league_seasons(request, league_id):
         'seasons': seasons,
     }
     return render(request, 'competition/league_seasons.html', context)
+
+
+def season_table(request, league_id, season_id):
+    season = get_object_or_404(Season, id=season_id)
+    team_stats = TeamStats.objects.filter(season_id=season_id).order_by('-scores')
+    context = {
+        'team_stats': team_stats,
+        'season': season,
+    }
+    return render(request, 'competition/season_table.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
