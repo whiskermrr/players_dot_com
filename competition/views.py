@@ -156,11 +156,15 @@ def team_update(request, team_id):
 
                 for i, league in enumerate(team_leagues):
                     if new_leagues[i]:
-                        TeamStats.create(team=team, season=league).save()
+                        seasons = Season.objects.filter(league_id=league.id)
+                        for season in seasons:
+                            TeamStats.create(team=team, season=season).save()
             # if there is not stats in team linked to leagues we need to create them
             else:
                 for league in team_leagues:
-                    TeamStats.create(team=team, season=league).save()
+                    seasons = Season.objects.filter(league_id=league.id)
+                    for season in seasons:
+                        TeamStats.create(team=team, season=season).save()
 
         return redirect('competition:team')
     return render(request, 'competition/team_add.html', {'team_form': team_form})

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d94273b-fd3e-4db3-ab2c-a835e856c6ab" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/templates/competition/team_detail.html" afterPath="$PROJECT_DIR$/competition/templates/competition/team_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/players_dot_com/settings.py" afterPath="$PROJECT_DIR$/players_dot_com/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/views.py" afterPath="$PROJECT_DIR$/competition/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,12 +36,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/players_dot_com/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="414">
               <caret line="38" column="19" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/competition/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="651">
+              <caret line="163" column="43" lean-forward="true" selection-start-line="163" selection-start-column="43" selection-end-line="163" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -85,7 +97,6 @@
         <option value="$PROJECT_DIR$/competition/models.py" />
         <option value="$PROJECT_DIR$/competition/templates/competition/base.html" />
         <option value="$PROJECT_DIR$/competition/urls.py" />
-        <option value="$PROJECT_DIR$/competition/views.py" />
         <option value="$PROJECT_DIR$/competition/templates/competition/league_seasons.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/bootstrap_css.html" />
         <option value="$PROJECT_DIR$/competition/static/competition/css/table.css" />
@@ -93,6 +104,7 @@
         <option value="$PROJECT_DIR$/competition/templates/competition/match_detail.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/team_detail.html" />
         <option value="$PROJECT_DIR$/players_dot_com/settings.py" />
+        <option value="$PROJECT_DIR$/competition/views.py" />
       </list>
     </option>
   </component>
@@ -561,6 +573,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="20" column="77" lean-forward="false" selection-start-line="20" selection-start-column="77" selection-end-line="20" selection-end-column="77" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -649,16 +662,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/competition/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="81" column="51" lean-forward="true" selection-start-line="81" selection-start-column="51" selection-end-line="81" selection-end-column="51" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/competition/templates/competition/match_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="456">
@@ -697,6 +700,16 @@
         <state relative-caret-position="414">
           <caret line="38" column="19" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/competition/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="651">
+          <caret line="163" column="43" lean-forward="true" selection-start-line="163" selection-start-column="43" selection-end-line="163" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
