@@ -61,7 +61,7 @@ table.fixed td { overflow: hidden; }
 
 <div class="match col-md-8 col-sm-offset-2">
     <div class="row" style="background-color: #8dc63f; text-align: center;">
-        <a href="{% url 'competition:team_details' match.host.id %}">
+        <a href="{% url 'competition:season_table' match.season.league.id match.season.id %}">
             <h3>{{ match.season.league.name }} {{ match.season.season }}</h3>
         </a>
     </div>
