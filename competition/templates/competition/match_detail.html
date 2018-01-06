@@ -1,28 +1,142 @@
 {% extends 'competition/base.html' %}
+{% load staticfiles %}
+
+{% block style %}
+{{ block.super }}
+
+table {
+    margin: 20px auto;
+    border-spacing: 5px 12px;
+    table-layout: fixed;
+}
+
+.team-host
+{
+    padding: 10px;
+    padding-right: 50px;
+}
+
+.team-guest
+{
+    padding: 10px;
+    padding-left: 50px;
+}
+
+.custom-row
+{
+    background-color: #F2F2F2;
+}
+
+img
+{
+    width: 100%;
+    width: 220px;
+    height: 220px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.match
+{
+    border-style: ridge;
+    text-align: initial;
+}
+
+
+.scores
+{
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+table.fixed { table-layout:fixed; }
+table.fixed td { overflow: hidden; }
+
+
+{% endblock %}
+
 
 {% block body %}
 
-    <h1> {{ match.host.name }} {{ match.hostGoals}} : {{ match.guestGoals }} {{ match.guest.name }}</h1>
-    <h2> {{ match.date }}</h2>
-    <a href="{% url 'competition:match_update' match.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-    <a href="{% url 'competition:match_delete' match.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
-
-    {% if facts %}
-        {% for fact in facts %}
-            <li>
-                <h3> {{ fact.player.name }} {{ fact.incident }} Min: {{ fact.minute }} </h3>
-                <a href="{% url 'competition:fact_update' match.id fact.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-                <a href="{% url 'competition:fact_delete' match.id fact.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
-            </li>
-        {% endfor %}
-    {% else %}
-        <h2>No facts</h2>
-    {% endif %}
-
-    <br>
-    <div>
-            <a href="{% url 'competition:fact_add' match_id=match.id %}">
-                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add fact </button>
-            </a>
+<div class="match col-md-8 col-sm-offset-2">
+    <div class="row" style="background-color: #8dc63f; text-align: center;">
+        <a href="{% url 'competition:team_details' match.host.id %}">
+            <h3>{{ match.season.league.name }} {{ match.season.season }}</h3>
+        </a>
     </div>
+    <div class="row" style="background-color: #8dc63f;">
+        <div class="col-md-4 pull-left" style="text-align: center;">
+            <a href="{% url 'competition:team_details' match.host.id %}"><h3>{{ match.host.name }}</h3></a>
+        </div>
+        <div class="col-md-4 pull-right" style="text-align: center;">
+            <a href="{% url 'competition:team_details' match.guest.id %}"><h3>{{ match.guest.name }}</h3></a>
+        </div>
+    </div>
+    <div class="row" style="background-color: #a6df58;">
+        <div class="col-md-4 pull-left">
+            <a> <img src="{{ match.host.avatar.url }}"> </a>
+        </div>
+        <div class="col-md-4 scores">
+            <span class="label label-primary" style="font-size: 60px;">{{ match.hostGoals }} : {{ match.guestGoals }}</span>
+        </div>
+        <div class="col-md-4 pull-right">
+            <a> <img src="{{ match.guest.avatar.url }}"> </a>
+        </div>
+    </div>
+    <div class="row" style="background-color: #a6df58; text-align: center;">
+        <a href="{% url 'competition:match_update' match.id %}">
+            <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
+        </a>
+        <a href="{% url 'competition:match_delete' match.id %}">
+            <button type="button"><span class="glyphicon glyphicon-trash"></span></button>
+        </a>
+    </div>
+    <div class="row" style="background-color: #8dc63f;">
+        <hr/>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-6 col-sm-offset-3">
+    {% if facts %}
+            {% for fact in facts %}
+                <p style="padding: 5px;">
+                    <span class="label label-primary" style="font-size: 20px;">{{ fact.minute }}'</span>
+                    {{ fact.player.name }} {{ fact.player.sname }}
+                    {% if fact.incident == "goal" %}
+                        <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                    {% elif fact.incident == "sub in" %}
+                        <span class="glyphicon glyphicon-arrow-up" style="color: #30FF18"></span>
+                    {% elif fact.incident == "sub out" %}
+                        <span class="glyphicon glyphicon-arrow-down" style="color: #FF2018"></span>
+                    {% elif fact.incident == "red card" %}
+                        <span class="glyphicon glyphicon-bookmark" style="color: #FF2018"></span>
+                    {% elif fact.incident == "yellow card" %}
+                        <span class="glyphicon glyphicon-bookmark" style="color: #FFBB18"></span>
+                    {% endif %}
+                    <a href="{% url 'competition:fact_update' match.id fact.id %}">
+                    <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
+                    </a>
+                    <a href="{% url 'competition:fact_delete' match.id fact.id %}">
+                    <button type="button"><span class="glyphicon glyphicon-trash"></span></button>
+                    </a>
+                </p>
+            {% endfor %}
+    {% else %}
+
+    {% endif %}
+        </div>
+    </div>
+
+    <hr/>
+
+
+    <div class="row" style="text-align: center;">
+        <a href="{% url 'competition:fact_add' match_id=match.id %}">
+            <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add fact </button>
+        </a>
+    </div>
+</div>
+
+
 {% endblock %}

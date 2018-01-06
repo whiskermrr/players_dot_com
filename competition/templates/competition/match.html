@@ -54,7 +54,6 @@ img
 
     <table>
     {% for match in matches %}
-
         <tr class="match">
             <td>
                 <img class="pull-left" alt="avatar" src="{{ match.host.avatar.url }}" />
@@ -68,7 +67,7 @@ img
                 </a>
             </td>
             <td class="team-guest">
-                <a class="team-link pull-right" href="{% url 'competition:team_details' match.host.id %}">{{ match.guest.name }}</a>
+                <a class="team-link pull-right" href="{% url 'competition:team_details' match.guest.id %}">{{ match.guest.name }}</a>
             </td>
             <td>
                 <img class="pull-right" alt="avatar" src="{{ match.guest.avatar.url }}" />

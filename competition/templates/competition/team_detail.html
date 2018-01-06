@@ -5,9 +5,11 @@
 
 img
 {
-    max-width: 220px;
-    max-height: 220px;
+    width: 100%;
+    width: 220px;
+    height: 220px;
     padding: 5px;
+    margin: 0px;
 }
 
 .team
@@ -29,9 +31,10 @@ img
             {% endfor %}
         </div>
         <div class="col-md-3">
-            <h3>Total Stats:</h3>
             <br>
+            <h4>Total Stats:</h4>
             <p><span class="label label-success" style="font-size: 18px;">Matches Won: {{ total_matches_won }}</span></p>
+            <p><span class="label label-warning" style="font-size: 18px;">Matches Lost: {{ total_matches_draw }}</span></p>
             <p><span class="label label-danger" style="font-size: 18px;">Matches Lost: {{ total_matches_lost }}</span></p>
             <br>
             <p><span class="label label-success" style="font-size: 18px;">Goals Scored:: {{ total_goals_scored }}</span></p>
@@ -52,9 +55,21 @@ img
     <hr/>
 
     <div class="row">
-        <div class="col-md-5" style="padding-right: 2cm;">
-            {% for league in team.league.all %}
-                <a href="{% url 'competition:league_details' league.id %}"><p> {{ league.name }} {{ league.season.season }}</p></a>
+        <div class="col-md-8" style="padding-right: 2cm;">
+            {% for season in seasons %}
+                <a href="{% url 'competition:season_table' season.league.id season.id %}">
+                    <p>{{ season.league.name }} {{ season.season }}</p>
+                </a>
+                {% for stats in team_stats %}
+                    {% if stats.season.id == season.id %}
+            <p>
+                <span class="label label-info">Won: {{ stats.matchesWon }}</span>
+                <span class="label label-info">Lost: {{ stats.matchesLost }}</span>
+                <span class="label label-info">Scored: {{ stats.goalsScored }}</span>
+                <span class="label label-info">Lost: {{ stats.goalsLost }}</span>
+            </p>
+                    {% endif %}
+                {% endfor %}
             {% endfor %}
         </div>
     </div>
