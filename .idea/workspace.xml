@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0d94273b-fd3e-4db3-ab2c-a835e856c6ab" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/competition/static/competition/css/table.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/competition/templates/competition/league_table.html" afterPath="$PROJECT_DIR$/competition/templates/competition/season_table.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/templates/competition/bootstrap_css.html" afterPath="$PROJECT_DIR$/competition/templates/competition/bootstrap_css.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/templates/competition/league_seasons.html" afterPath="$PROJECT_DIR$/competition/templates/competition/league_seasons.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/templates/competition/match_detail.html" afterPath="$PROJECT_DIR$/competition/templates/competition/match_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/templates/competition/team_detail.html" afterPath="$PROJECT_DIR$/competition/templates/competition/team_detail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/urls.py" afterPath="$PROJECT_DIR$/competition/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/views.py" afterPath="$PROJECT_DIR$/competition/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/players_dot_com/settings.py" afterPath="$PROJECT_DIR$/players_dot_com/settings.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,7 +14,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/competition/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1667">
@@ -30,6 +22,26 @@
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="team_detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/competition/templates/competition/team_detail.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="441">
+              <caret line="66" column="83" lean-forward="false" selection-start-line="66" selection-start-column="83" selection-end-line="66" selection-end-column="83" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/players_dot_com/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="414">
+              <caret line="38" column="19" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -64,7 +76,6 @@
         <option value="$PROJECT_DIR$/competition/templates/competition/fact_add.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/league_add.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/team_add.html" />
-        <option value="$PROJECT_DIR$/players_dot_com/settings.py" />
         <option value="$PROJECT_DIR$/players_dot_com/urls.py" />
         <option value="$PROJECT_DIR$/competition/templates/competition/match_add.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/season_add.html" />
@@ -81,10 +92,11 @@
         <option value="$PROJECT_DIR$/competition/templates/competition/season_table.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/match_detail.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/team_detail.html" />
+        <option value="$PROJECT_DIR$/players_dot_com/settings.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="260" />
     <option name="y" value="20" />
     <option name="width" value="1400" />
@@ -233,7 +245,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20364584" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -333,6 +345,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="567">
           <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -516,13 +529,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/players_dot_com/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="39" column="20" lean-forward="false" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/competition/templates/competition/season_teams.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -625,14 +631,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/competition/templates/competition/team_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="36" column="109" lean-forward="false" selection-start-line="36" selection-start-column="109" selection-end-line="36" selection-end-column="109" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/competition/templates/competition/season_table.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -683,6 +681,22 @@
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/competition/templates/competition/team_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="66" column="83" lean-forward="false" selection-start-line="66" selection-start-column="83" selection-end-line="66" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/players_dot_com/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="38" column="19" lean-forward="false" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+          <folding />
         </state>
       </provider>
     </entry>
