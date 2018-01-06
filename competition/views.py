@@ -229,7 +229,7 @@ def match(request):
 
 def match_details(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
-    facts = MatchFacts.objects.filter(match=match_id)
+    facts = MatchFacts.objects.filter(match=match_id).order_by('minute')
     context = {'match': match, 'facts': facts}
     return render(request, 'competition/match_detail.html', context)
 
@@ -251,7 +251,7 @@ def match_add(request):
 def change_stats(match_id, update):
     new_match = get_object_or_404(Match, id=match_id)
     # if match has been played, if not we don't need to do anything
-    if new_match.hostGoals and new_match.guestGoals:
+    if new_match.hostGoals is not None and new_match.guestGoals is not None:
         # working only on stats, not whole teams
         host_stats = get_object_or_404(TeamStats, team_id=new_match.host.id, season_id=new_match.season.id)
         guest_stats = get_object_or_404(TeamStats, team_id=new_match.guest.id, season_id=new_match.season.id)

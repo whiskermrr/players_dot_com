@@ -96,6 +96,10 @@ table.fixed td { overflow: hidden; }
                         <span class="glyphicon glyphicon-arrow-up" style="color: #30FF18"></span>
                     {% elif fact.incident == "sub out" %}
                         <span class="glyphicon glyphicon-arrow-down" style="color: #FF2018"></span>
+                    {% elif fact.incident == "red card" %}
+                        <span class="glyphicon glyphicon-bookmark" style="color: #FF2018"></span>
+                    {% elif fact.incident == "yellow card" %}
+                        <span class="glyphicon glyphicon-bookmark" style="color: #FFBB18"></span>
                     {% endif %}
                     <a href="{% url 'competition:fact_update' match.id fact.id %}">
                     <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
