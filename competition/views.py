@@ -200,7 +200,7 @@ def season_add(request, league_id):
                 stats.save()
 
 
-        return redirect('competition:index')
+        return redirect('competition:league_seasons', league_id=league_id)
     else:
         season_form = SeasonForm()
         return render(request, 'competition/season_add.html', {'season_form': season_form})
@@ -329,7 +329,7 @@ def fact_update(request, match_id, fact_id):
 
 def league_seasons(request, league_id):
     league = get_object_or_404(LeagueType, id=league_id)
-    seasons = Season.objects.filter(league_id=league_id)
+    seasons = Season.objects.filter(league_id=league_id).order_by('season')
     context = {
         'league': league,
         'seasons': seasons,
