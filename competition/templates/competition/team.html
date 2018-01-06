@@ -2,26 +2,32 @@
 
 {%  block body %}
 
-    <div>
-        <br>
+<div class="row">
+        <h1>Teams</h1>
         <a href="{% url 'competition:team-add'  %}">
-            <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj druzyne </button>
+            <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Team</button>
         </a>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-sm-6 col-md-offset-3">
+        {% if all_teams %}
+            <ul class="event-list">
+                {% for team in all_teams %}
+                    <li>
+                        <img style="width: 80px; height: 80px;" src="{{ team.avatar.url }}" />
+                        <div class="info" style="height: 80px;">
+                            <h2 style="vertical-align: middle;"><a href="{% url 'competition:team_details' team.id %}">{{ team.name }}</a></h2>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h2>There is not teams in this league</h2>
+        {% endif %}
     </div>
+</div>
 
-    {% if all_teams %}
-    <ul>
-        <h1>Drużyny</h1>
-             <br>
-            {% for team in all_teams %}
-                  <br>
-                    <a href="{% url 'competition:team_details' team.id %}"> {{ team.name }} {{ player.sname }} </a>
-                    <a href="{% url 'competition:team_update' team.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-                    <a href="{% url 'competition:team_delete' team.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
 
-            {% endfor %}
-        </ul>
-    {% else %}
-        <h3>Niema druzyn do wyswietlenia </h3>
-    {% endif %}
+
 {% endblock %}

@@ -1,5 +1,8 @@
 import datetime
 import operator
+
+from django.db.models import Q
+
 from .models import *
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
@@ -7,7 +10,11 @@ from .forms import *
 
 def index(request):
     all_league = list(LeagueType.objects.all().order_by('name'))
-    context = {'all_league': all_league}
+    all_seasons = list(Season.objects.all())
+    context = {
+        'all_league': all_league,
+        'all_seasons': all_seasons,
+    }
     return render(request, 'competition/index.html', context)
 
 
@@ -96,6 +103,9 @@ def team_details(request, team_id):
 
 def team_delete(request, team_id):
     team = get_object_or_404(Team, pk=team_id)
+    matches = Match.objects.filter(Q(host_id=team.id) | Q(guest_id=team.id))
+    for match in matches:
+        change_stats(match.id, False)
     team.delete()
     return redirect('competition:team')
 
@@ -145,6 +155,13 @@ def team_update(request, team_id):
 
                 for i, stats in enumerate(team_stats):
                     if not valid_stats[i]:
+                        matches = Match.objects.filter(
+                            Q(host_id=team.id) | Q(guest_id=team.id),
+                            season_id=stats.season.id
+                        )
+                        for match in matches:
+                            change_stats(match.id, False)
+                            match.delete()
                         stats.delete()
 
                 # similar to the code above but we're checking if there is a new league that team don't have

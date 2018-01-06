@@ -3,15 +3,26 @@
 {% block body %}
 
     <h1> {{ league.name }}</h1>
-    {% if teams %}
-        {% for team in teams %}
-            <ul>
-                <li><a href="{% url 'competition:team_details' team.id %}">{{ team.name }}</a></li>
-
-            </ul>
-        {% endfor %}
-    {% else %}
-        <h2>No teams in this league</h2>
-    {% endif %}
+            <a href="{% url 'competition:league_update' league.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
+			<a href="{% url 'competition:league_delete' league.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-6 col-md-offset-3">
+            {% if teams %}
+                <ul class="event-list">
+                    {% for team in teams %}
+                        <li>
+                            <img style="width: 80px; height: 80px;" src="{{ team.avatar.url }}" />
+                            <div class="info" style="height: 80px;">
+                                <h2 style="vertical-align: middle;"><a href="{% url 'competition:team_details' team.id %}">{{ team.name }}</a></h2>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h2>There is not teams in this league</h2>
+            {% endif %}
+        </div>
+    </div>
 
 {% endblock %}

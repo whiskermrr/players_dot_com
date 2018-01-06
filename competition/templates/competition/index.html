@@ -1,22 +1,40 @@
 {% extends 'competition/base.html' %}
+{% load staticfiles %}
 
 {%  block body %}
-    <h1>Ligi</h1>
-        <div>
+
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1>Ligi</h1>
             <a href="{% url 'competition:league-add'  %}">
-                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj lige </button>
+                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add League </button>
             </a>
         </div>
+    </div>
+    <br>
     {% if all_league %}
-        <ul>
-            <br>
-            {% for league in all_league %}
-                <li><a href="{% url 'competition:league_seasons' league.id %}"> {{ league.name }} </a>
-                    <a href="{% url 'competition:league_update' league.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-                    <a href="{% url 'competition:league_delete' league.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <ul class="event-list">
+                {% for league in all_league %}
+                    <li>
+                        <div class="info" style="height: 80px;">
+                            <h1 class="title"><a href="{% url 'competition:league_details' league.id %}">{{ league.name }}</a></h1>
+                            <br>
+                            {% for season in all_seasons %}
+                                {% if season.league.id == league.id %}
+                                    <span class="glyphicon glyphicon-calendar" style="color: #101010;"></span>
+                                    <a href="{% url 'competition:season_table' league.id season.id %}">
+                                        {{ season.season }}
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
     {% else %}
         <h3>Niema Ligi do wyswietlenia </h3>
     {% endif %}
