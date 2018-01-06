@@ -10,7 +10,7 @@ from .forms import *
 
 def index(request):
     all_league = list(LeagueType.objects.all().order_by('name'))
-    all_seasons = list(Season.objects.all())
+    all_seasons = list(Season.objects.all().order_by('season'))
     context = {
         'all_league': all_league,
         'all_seasons': all_seasons,
@@ -189,8 +189,13 @@ def team_update(request, team_id):
 
 def league_details(request, league_id):
     teams = Team.objects.filter(league=league_id)
+    seasons = Season.objects.filter(league=league_id).order_by('season')
     league = get_object_or_404(LeagueType, pk=league_id)
-    context = {'teams': teams, 'league': league}
+    context = {
+        'teams': teams,
+        'league': league,
+        'seasons': seasons,
+    }
     return render(request, 'competition/league_detail.html', context)
 
 
@@ -221,7 +226,7 @@ def season_add(request, league_id):
                 stats.save()
 
 
-        return redirect('competition:league_seasons', league_id=league_id)
+        return redirect('competition:league_details', league_id=league_id)
     else:
         season_form = SeasonForm()
         return render(request, 'competition/season_add.html', {'season_form': season_form})
@@ -278,8 +283,6 @@ def change_stats(match_id, update):
         guest_stats = get_object_or_404(TeamStats, team_id=new_match.guest.id, season_id=new_match.season.id)
         goals_host = new_match.hostGoals
         goals_guest = new_match.guestGoals
-        points_host = 0
-        points_guest = 0
 
         if goals_host > goals_guest:
             points_host = 3

@@ -24,7 +24,7 @@
                             {% for season in all_seasons %}
                                 {% if season.league.id == league.id %}
                                     <span class="glyphicon glyphicon-calendar" style="color: #101010;"></span>
-                                    <a href="{% url 'competition:season_table' league.id season.id %}">
+                                    <a style="padding-right: 20px;" href="{% url 'competition:season_table' league.id season.id %}">
                                         {{ season.season }}
                                     </a>
                                 {% endif %}
