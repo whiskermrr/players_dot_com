@@ -61,7 +61,7 @@ table.fixed td { overflow: hidden; }
 
 <div class="match col-md-8 col-sm-offset-2">
     <div class="row" style="background-color: #8dc63f; text-align: center;">
-        <a href="{% url 'competition:team_details' match.host.id %}">
+        <a href="{% url 'competition:season_table' match.season.league.id match.season.id %}">
             <h3>{{ match.season.league.name }} {{ match.season.season }}</h3>
         </a>
     </div>
@@ -72,6 +72,9 @@ table.fixed td { overflow: hidden; }
         <div class="col-md-4 pull-right" style="text-align: center;">
             <a href="{% url 'competition:team_details' match.guest.id %}"><h3>{{ match.guest.name }}</h3></a>
         </div>
+    </div>
+    <div class="row" style="background-color: #a6df58   ;">
+        <br>
     </div>
     <div class="row" style="background-color: #a6df58;">
         <div class="col-md-4 pull-left">
@@ -85,6 +88,7 @@ table.fixed td { overflow: hidden; }
         </div>
     </div>
     <div class="row" style="background-color: #a6df58; text-align: center;">
+        <p><span class="glyphicon glyphicon-calendar"></span> {{ match.date }}</p>
         <a href="{% url 'competition:match_update' match.id %}">
             <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
         </a>
