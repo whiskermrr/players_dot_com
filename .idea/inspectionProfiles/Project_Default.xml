@@ -13,6 +13,7 @@
           <option value="competition.models.MatchFacts.objects" />
           <option value="competition.models.Player.objects" />
           <option value="competition.models.Season.objects" />
+          <option value="competition.models.PlayerStats.objects" />
         </list>
       </option>
     </inspection_tool>

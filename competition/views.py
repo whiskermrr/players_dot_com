@@ -36,6 +36,16 @@ def player_add(request):
         if player_form.is_valid():
             new_player = player_form.save(commit=False)
             new_player.save()
+            seasons = []
+            for league in new_player.team.league.all():
+                league_seasons = Season.objects.filter(league=league)
+                for season in league_seasons:
+                     seasons.append(season)
+
+            for season in seasons:
+                player_stats = PlayerStats.create(new_player, season, 0)
+                player_stats.save()
+
         return redirect('competition:player')
     else:
         player_form = PlayerForm()
@@ -53,7 +63,24 @@ def player_update(request, player_id):
     player_form = PlayerForm(request.POST or None, instance=player)
     if request.method == 'POST':
         if player_form.is_valid():
-            player_form.save()
+            player = player_form.save(commit=False)
+            player.save()
+            leagues = player.team.league.all()
+            player_stats = PlayerStats.objects.filter(player=player)
+            new_leagues = [True for i in range(len(leagues))]
+
+            for i, league in enumerate(leagues):
+                for stats in player_stats:
+                    if stats.season.league == league:
+                        new_leagues[i] = False
+
+                if new_leagues[i] == True:
+                    seasons = Season.objects.filter(league=league)
+                    for season in seasons:
+                        new_stats = PlayerStats.create(player, season, 0)
+                        new_stats.save()
+
+
         return redirect('competition:player')
     return render(request, 'competition/player_add.html', {'player_form': player_form})
 
@@ -329,6 +356,10 @@ def fact_add(request, match_id):
         if fact_form.is_valid():
             new_fact = fact_form.save(commit=False)
             new_fact.save()
+            if new_fact.incident == 'goal':
+                player_stats = get_object_or_404(PlayerStats, player=new_fact.player, season=new_fact.match.season)
+                player_stats.addScoredGoals(1, True)
+                player_stats.save()
         return redirect('competition:match_details', match_id=match_id)
     else:
         fact_form = MatchFactForm(initial={'match': match_id})
@@ -337,6 +368,9 @@ def fact_add(request, match_id):
 
 def fact_delete(request, match_id, fact_id):
     fact = get_object_or_404(MatchFacts, pk=fact_id)
+    player_stats = get_object_or_404(PlayerStats, player=fact.player, season=fact.match.season)
+    player_stats.addScoredGoals(1, False)
+    player_stats.save()
     fact.delete()
     return redirect('competition:match_details', match_id=match_id)
 
@@ -364,9 +398,17 @@ def league_seasons(request, league_id):
 def season_table(request, league_id, season_id):
     season = get_object_or_404(Season, id=season_id)
     team_stats = TeamStats.objects.filter(season_id=season_id).order_by('-scores')
+    all_stats = list(PlayerStats.objects.filter(season=season).order_by('-goalsScored'))
+
+    if len(all_stats) > 3:
+        stats = all_stats[0:3]
+    else:
+        stats = all_stats
+
     context = {
         'team_stats': team_stats,
         'season': season,
+        'stats': stats,
     }
     return render(request, 'competition/season_table.html', context)
 
