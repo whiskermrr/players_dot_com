@@ -61,4 +61,42 @@
     {% else %}
         <h2>No info found.</h2>
     {% endif %}
+
+    {% if stats %}
+            <div class="row" style="text-align: initial;">
+                <h1>Top Scorer</h1>
+                <table class="points_table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">#</th>
+                            <th class="col-xs-5">Player</th>
+                            <th class="col-xs-4">Team</th>
+                            <th class="col-xs-2">Goals</th>
+                        </tr>
+                    </thead>
+                    <tbody class="points_table_scrollbar">
+                        {% for s in stats %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <tr class="even">
+                            {% else %}
+                            <tr class="odd">
+                            {% endif %}
+                                <td class="col-xs-1">
+                                    {{ forloop.counter }}
+                                </td>
+                                <td class="col-xs-5">
+                                    <a href="{% url 'competition:player_details' s.player.id %}">{{ s.player.name }} {{ s.player.sname }}</a>
+                                </td>
+                                <td class="col-xs-4">
+                                    {{ s.player.team.name }}
+                                </td>
+                                <td class="col-xs-2">
+                                    {{ s.goalsScored }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    {% endif %}
 {% endblock %}
