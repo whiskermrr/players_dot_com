@@ -1,24 +1,84 @@
 {% extends 'competition/base.html' %}
 
+{% block style %}
+{{ block.super }}
+
+table {
+    margin: 20px auto;
+    border-spacing: 5px 12px;
+}
+
+.team-host
+{
+    padding: 10px;
+    padding-right: 200px;
+}
+
+.team-guest
+{
+    padding: 10px;
+    padding-left: 200px;
+}
+
+.match
+{
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(51, 51, 51);
+    box-shadow: 0px 0px 5px rgba(51, 51, 51, 0.7);
+    padding: 0px;
+    margin: 0px 0px 20px;
+}
+
+img
+{
+    width: 100%;
+    width: 50px;
+    height: 50px;
+    padding: 0px;
+    margin: 0px;
+}
+
+{% endblock %}
+
 {% block body %}
 
-    <div>
-            <a href="{% url 'competition:match-add'  %}">
-                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add match </button>
-            </a>
-    </div>
+<div class="row">
+<a href="{% url 'competition:match-add'  %}">
+    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add match </button>
+</a>
+</div>
 
-    {% if matches %}
-        {% for match in matches %}
-            <li>
-                <a href="{% url 'competition:match_details' match.id  %}"> {{ match.host.name }} {{ match.hostGoals }} : {{ match.guestGoals }} {{ match.guest.name }}</a>
-                <a href="{% url 'competition:match_update' match.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-                <a href="{% url 'competition:match_delete' match.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
-            </li>
-            <br>
-        {% endfor %}
-    {% else %}
-        <h2>No matches found.</h2>
-    {% endif %}
+<div class="row">
+    <div class="col-md-8 col-sm-offset-2">
+{% if matches %}
 
+    <table>
+    {% for match in matches %}
+        <tr class="match">
+            <td>
+                <img class="pull-left" alt="avatar" src="{{ match.host.avatar.url }}" />
+            </td>
+            <td class="team-host">
+                <a class="team-link pull-left" href="{% url 'competition:team_details' match.host.id %}">{{ match.host.name }}</a>
+            </td>
+            <td>
+                <a href="{% url 'competition:match_details' match.id %}">
+                    <span class="label label-primary" style="font-size: 20px;">{{ match.hostGoals }} : {{ match.guestGoals }}</span>
+                </a>
+            </td>
+            <td class="team-guest">
+                <a class="team-link pull-right" href="{% url 'competition:team_details' match.guest.id %}">{{ match.guest.name }}</a>
+            </td>
+            <td>
+                <img class="pull-right" alt="avatar" src="{{ match.guest.avatar.url }}" />
+            </td>
+        </tr>
+
+    {% endfor %}
+    </table>
+{% else %}
+    <h2>No matches found.</h2>
+{% endif %}
+        </div>
+</div>
 {% endblock %}

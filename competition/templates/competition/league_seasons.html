@@ -1,0 +1,22 @@
+{% extends 'competition/base.html' %}
+
+{% block body %}
+
+<a href="{% url 'competition:season_add' league.id %}">
+    <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Season</button>
+</a>
+
+    <h2>{{ league.name }}</h2>
+
+    {% if seasons %}
+        {% for s in seasons %}
+            <li>
+                <a href="{% url 'competition:season_table' league.id s.id %}"> {{ s.season }} </a>
+            </li>
+            <br>
+        {% endfor %}
+    {% else %}
+        <h2>No seasons found.</h2>
+    {% endif %}
+
+{% endblock %}

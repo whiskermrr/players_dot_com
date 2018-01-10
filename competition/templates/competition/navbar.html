@@ -1,0 +1,33 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+
+        <!-- Header -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#topNavBar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'competition:index' %}">Best League</a>
+        </div>
+
+        <!-- Items -->
+        <div class="collapse navbar-collapse"  id="topNavBar">
+            <ul class="nav navbar-nav">
+                <li class="">
+                    <a href="{% url 'competition:index' %}">
+                        <span class="glyphicon glyphicon-knight" aria-hidden="true"></span>&nbsp; Rozgrywki</a>
+                </li>
+                <li class=""><a href="{% url 'competition:team' %}">
+                    <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>&nbsp; Druzyny</a>
+                </li>
+                <li class=""><a href="{% url 'competition:player' %}">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Pilkarze</a>
+                </li>
+                <li class=""><a href="{% url 'competition:match' %}">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp; Mecze</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

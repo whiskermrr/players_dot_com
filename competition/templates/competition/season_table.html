@@ -1,0 +1,102 @@
+{% extends 'competition/base.html' %}
+
+{% block style %}
+{{ block.super }}
+
+{% endblock %}
+
+{% block body %}
+
+    {% if team_stats %}
+    <div class="row" style="text-align: initial;">
+        <h1> {{ season.league.name }} {{ season.season }}</h1>
+        <br>
+
+        <table class="points_table">
+            <thead>
+                <tr>
+					<th class="col-xs-1">#</th>
+					<th class="col-xs-5">Team</th>
+					<th class="col-xs-1">Won</th>
+					<th class="col-xs-1">Lost</th>
+                    <th class="col-xs-1">Draw</th>
+					<th class="col-xs-2">Goals</th>
+					<th class="col-xs-1">Points</th>
+				</tr>
+            </thead>
+            <tbody class="points_table_scrollbar">
+                {% for stats in team_stats %}
+                    {% if forloop.counter|divisibleby:2 %}
+                    <tr class="even">
+                    {% else %}
+                    <tr class="odd">
+                    {% endif %}
+                        <td class="col-xs-1">
+                            {{ forloop.counter }}
+                        </td>
+                        <td class="col-xs-5">
+                            <a href="{% url 'competition:team_details' stats.team.id %}">{{ stats.team.name }}</a>
+                        </td>
+                        <td class="col-xs-1">
+                            {{ stats.matchesWon }}
+                        </td>
+                        <td class="col-xs-1">
+                            {{ stats.matchesLost }}
+                        </td>
+                        <td class="col-xs-1">
+                            {{ stats.matchesDraw }}
+                        </td>
+                        <td class="col-xs-2">
+                            {{ stats.goalsScored }}/{{ stats.goalsLost}}
+                        </td>
+                        <td class="col-xs-1">
+                            {{ stats.scores }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    {% else %}
+        <h2>No info found.</h2>
+    {% endif %}
+
+    {% if stats %}
+            <div class="row" style="text-align: initial;">
+                <h1>Top Scorer</h1>
+                <table class="points_table">
+                    <thead>
+                        <tr>
+                            <th class="col-xs-1">#</th>
+                            <th class="col-xs-5">Player</th>
+                            <th class="col-xs-4">Team</th>
+                            <th class="col-xs-2">Goals</th>
+                        </tr>
+                    </thead>
+                    <tbody class="points_table_scrollbar">
+                        {% for s in stats %}
+                            {% if forloop.counter|divisibleby:2 %}
+                            <tr class="even">
+                            {% else %}
+                            <tr class="odd">
+                            {% endif %}
+                                <td class="col-xs-1">
+                                    {{ forloop.counter }}
+                                </td>
+                                <td class="col-xs-5">
+                                    <a href="{% url 'competition:player_details' s.player.id %}">{{ s.player.name }} {{ s.player.sname }}</a>
+                                </td>
+                                <td class="col-xs-4">
+                                    {{ s.player.team.name }}
+                                </td>
+                                <td class="col-xs-2">
+                                    {{ s.goalsScored }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+    {% endif %}
+{% endblock %}
