@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0d94273b-fd3e-4db3-ab2c-a835e856c6ab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/admin.py" afterPath="$PROJECT_DIR$/competition/admin.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/models.py" afterPath="$PROJECT_DIR$/competition/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/templates/competition/match_detail.html" afterPath="$PROJECT_DIR$/competition/templates/competition/match_detail.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/competition/views.py" afterPath="$PROJECT_DIR$/competition/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db.sqlite3" afterPath="$PROJECT_DIR$/db.sqlite3" />
     </list>
@@ -20,8 +19,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/competition/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5628">
-              <caret line="72" column="42" lean-forward="true" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
+            <state relative-caret-position="546">
+              <caret line="378" column="8" lean-forward="false" selection-start-line="378" selection-start-column="4" selection-end-line="378" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -30,8 +29,8 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/competition/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2213">
-              <caret line="165" column="49" lean-forward="true" selection-start-line="165" selection-start-column="49" selection-end-line="165" selection-end-column="49" />
+            <state relative-caret-position="617">
+              <caret line="170" column="22" lean-forward="false" selection-start-line="170" selection-start-column="8" selection-end-line="170" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -82,10 +81,10 @@
         <option value="$PROJECT_DIR$/competition/templates/competition/team.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/index.html" />
         <option value="$PROJECT_DIR$/competition/templates/competition/league_detail.html" />
-        <option value="$PROJECT_DIR$/competition/templates/competition/match_detail.html" />
         <option value="$PROJECT_DIR$/competition/admin.py" />
         <option value="$PROJECT_DIR$/competition/models.py" />
         <option value="$PROJECT_DIR$/competition/views.py" />
+        <option value="$PROJECT_DIR$/competition/templates/competition/match_detail.html" />
       </list>
     </option>
   </component>
@@ -589,13 +588,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/competition/templates/competition/match_detail.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="76" column="12" lean-forward="false" selection-start-line="76" selection-start-column="12" selection-end-line="76" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/competition/templates/competition/league_detail.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
@@ -623,16 +615,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/competition/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2213">
-          <caret line="165" column="49" lean-forward="true" selection-start-line="165" selection-start-column="49" selection-end-line="165" selection-end-column="49" />
+        <state relative-caret-position="617">
+          <caret line="170" column="22" lean-forward="false" selection-start-line="170" selection-start-column="8" selection-end-line="170" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/competition/templates/competition/match_detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="609">
+          <caret line="119" column="31" lean-forward="true" selection-start-line="119" selection-start-column="31" selection-end-line="119" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/competition/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5628">
-          <caret line="72" column="42" lean-forward="true" selection-start-line="72" selection-start-column="42" selection-end-line="72" selection-end-column="42" />
+        <state relative-caret-position="546">
+          <caret line="378" column="8" lean-forward="false" selection-start-line="378" selection-start-column="4" selection-end-line="378" selection-end-column="8" />
           <folding />
         </state>
       </provider>

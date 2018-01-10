@@ -356,6 +356,10 @@ def fact_add(request, match_id):
         if fact_form.is_valid():
             new_fact = fact_form.save(commit=False)
             new_fact.save()
+            if new_fact.incident == 'goal':
+                player_stats = get_object_or_404(PlayerStats, player=new_fact.player, season=new_fact.match.season)
+                player_stats.addScoredGoals(1, True)
+                player_stats.save()
         return redirect('competition:match_details', match_id=match_id)
     else:
         fact_form = MatchFactForm(initial={'match': match_id})
@@ -364,6 +368,9 @@ def fact_add(request, match_id):
 
 def fact_delete(request, match_id, fact_id):
     fact = get_object_or_404(MatchFacts, pk=fact_id)
+    player_stats = get_object_or_404(PlayerStats, player=fact.player, season=fact.match.season)
+    player_stats.addScoredGoals(1, False)
+    player_stats.save()
     fact.delete()
     return redirect('competition:match_details', match_id=match_id)
 

@@ -118,9 +118,6 @@ table.fixed td { overflow: hidden; }
                     {% elif fact.incident == "yellow card" %}
                         <span class="glyphicon glyphicon-bookmark" style="color: #FFBB18"></span>
                     {% endif %}
-                    <a href="{% url 'competition:fact_update' match.id fact.id %}">
-                    <button type="button"><span class="glyphicon glyphicon-edit"></span></button>
-                    </a>
                     <a href="{% url 'competition:fact_delete' match.id fact.id %}">
                     <button type="button"><span class="glyphicon glyphicon-trash"></span></button>
                     </a>
