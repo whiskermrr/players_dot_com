@@ -155,3 +155,21 @@ class TeamStats(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.team, self.season)
+
+
+class PlayerStats(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE)
+    goalsScored = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+
+    @classmethod
+    def create(cls, player, season, goalsScored):
+        playerStats = cls(player=player, season=season, goalsScored=goalsScored)
+        return playerStats
+
+
+    def addScoredGoals(self, goals, update):
+        if update:
+            self.goalsScored += goals
+        else:
+            self.goalsScored -= goals

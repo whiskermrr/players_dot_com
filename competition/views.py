@@ -36,6 +36,16 @@ def player_add(request):
         if player_form.is_valid():
             new_player = player_form.save(commit=False)
             new_player.save()
+            seasons = []
+            for league in new_player.team.league.all():
+                league_seasons = Season.objects.filter(league=league)
+                for season in league_seasons:
+                     seasons.append(season)
+
+            for season in seasons:
+                player_stats = PlayerStats.create(new_player, season, 0)
+                player_stats.save()
+
         return redirect('competition:player')
     else:
         player_form = PlayerForm()
@@ -53,7 +63,24 @@ def player_update(request, player_id):
     player_form = PlayerForm(request.POST or None, instance=player)
     if request.method == 'POST':
         if player_form.is_valid():
-            player_form.save()
+            player = player_form.save(commit=False)
+            player.save()
+            leagues = player.team.league.all()
+            player_stats = PlayerStats.objects.filter(player=player)
+            new_leagues = [True for i in range(len(leagues))]
+
+            for i, league in enumerate(leagues):
+                for stats in player_stats:
+                    if stats.season.league == league:
+                        new_leagues[i] = False
+
+                if new_leagues[i] == True:
+                    seasons = Season.objects.filter(league=league)
+                    for season in seasons:
+                        new_stats = PlayerStats.create(player, season, 0)
+                        new_stats.save()
+
+
         return redirect('competition:player')
     return render(request, 'competition/player_add.html', {'player_form': player_form})
 
