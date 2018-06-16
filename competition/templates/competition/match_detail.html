@@ -14,12 +14,6 @@ img
     margin: 0px;
 }
 
-.match
-{
-    border-style: ridge;
-    text-align: initial;
-}
-
 
 .scores
 {
@@ -34,7 +28,7 @@ img
 
 {% block body %}
 
-<div class="match col-md-8 col-sm-offset-2">
+<div class="col-md-8 col-sm-offset-2">
     <div class="row">
         <div class="col-md-4 pull-left" style="text-align: center;">
             <a href="{% url 'competition:team_details' match.host.id %}"><h3>{{ match.host.name }}</h3></a>
