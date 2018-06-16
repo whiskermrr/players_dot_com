@@ -15,24 +15,11 @@
     {% if all_league %}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <ul class="event-list">
-                {% for league in all_league %}
-                    <li>
-                        <div class="info" style="height: 80px;">
-                            <h1 class="title"><a href="{% url 'competition:league_details' league.id %}">{{ league.name }}</a></h1>
-                            <br>
-                            {% for season in all_seasons %}
-                                {% if season.league.id == league.id %}
-                                    <span class="glyphicon glyphicon-calendar" style="color: #101010;"></span>
-                                    <a style="padding-right: 20px;" href="{% url 'competition:season_table' league.id season.id %}">
-                                        {{ season.season }}
-                                    </a>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </li>
-                {% endfor %}
-            </ul>
+            {% for league in all_league %}
+                    <div class="info" style="height: 80px;">
+                        <h1 class="title"><a href="{% url 'competition:league_details' league.id %}">{{ league.name }}</a></h1>
+                    </div>
+            {% endfor %}
         </div>
     </div>
     {% else %}

@@ -3,7 +3,7 @@ body
     background: whitesmoke url("images/gray-background.jpg");
 }
 
-ul.errorlist
+/*ul.errorlist
 {
     padding-left: 0;
 }
@@ -126,5 +126,5 @@ ul.errorlist > li
 .event-list > li > .info > .desc
 {
     padding: 0px 10px;
-}
+}*/
 
