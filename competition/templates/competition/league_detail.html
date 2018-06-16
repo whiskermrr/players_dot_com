@@ -1,10 +1,16 @@
 {% extends 'competition/base.html' %}
 
 {% block body %}
+<div class="row">
+    <div class="col-sm-8">
+        <h1> {{ league.name }}</h1>
+    </div>
+    <div class="col-sm-4">
+        <a href="{% url 'competition:league_update' league.id %}"><button class="btn btn-default" type="button">Edit</button></a>
+        <a href="{% url 'competition:league_delete' league.id %}"><button class="btn btn-default" type="button">Delete</span></button></a>
+    </div>
+</div>
 
-<h1> {{ league.name }}</h1>
-<a href="{% url 'competition:league_update' league.id %}"><button type="button"><span class="glyphicon glyphicon-edit"></span></button></a>
-<a href="{% url 'competition:league_delete' league.id %}"><button type="button"><span class="glyphicon glyphicon-trash"></span></button></a>
 <hr/>
 
 <div class="row">

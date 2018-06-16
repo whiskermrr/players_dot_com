@@ -3,25 +3,30 @@
 {%  block body %}
 
 <div class="row">
+    <div class="col-sm-8">
         <h1>Teams</h1>
+    </div>
+    <div class="col-sm-4">
         <a href="{% url 'competition:team-add'  %}">
-            <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Add Team</button>
+            <button type="button" class="btn btn-default">Add Team</button>
         </a>
+    </div>
+
 </div>
 <hr/>
 <div class="row">
-    <div class="col-sm-6 col-md-offset-3">
+    <div class="col-sm-12 ">
         {% if all_teams %}
-            <ul class="event-list">
+            <div class="row">
                 {% for team in all_teams %}
-                    <li>
+                    <div class="col-sm-4">
                         <img style="width: 80px; height: 80px;" src="{{ team.avatar.url }}" />
                         <div class="info" style="height: 80px;">
                             <h2 style="vertical-align: middle;"><a href="{% url 'competition:team_details' team.id %}">{{ team.name }}</a></h2>
                         </div>
-                    </li>
+                    </div>
                 {% endfor %}
-            </ul>
+            </div>
         {% else %}
             <h2>There is not teams in this league</h2>
         {% endif %}
