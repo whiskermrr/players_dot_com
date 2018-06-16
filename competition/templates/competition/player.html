@@ -2,16 +2,23 @@
 
 {%  block body %}
 
-    <div>
+    <div class="row">
+        <div class="col-sm-7">
+            <h1>Pilkarze</h1>
+        </div>
+        <div class="col-sm-5">
             <a href="{% url 'competition:player-add'  %}">
-                <button type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Dodaj pilkarza </button>
+                <button type="button" class="btn btn-default">Dodaj pilkarza</button>
             </a>
+        </div>
+
+
     </div>
 
 
     {% if all_players %}
     <ul>
-        <h1>Pilkarze</h1>
+
             <br>
             {% for player in all_players %}
                 <li>
